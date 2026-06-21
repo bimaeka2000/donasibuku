@@ -4,47 +4,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donasi Buku Perpustakaan Universitas Satya Terra Bhinneka</title>
+    <title>Inventaris Donasi Buku Perpustakaan - Universitas Satya Terra Bhinneka</title>
 
     <link rel="icon" type="image/png" href="/asset/logo.png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    
+    <!-- Nunito Font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- jQuery DataTables CSS (hidden data index) -->
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554',
+                        },
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            scroll-behavior: smooth;
         }
 
-        /* Batas tinggi minimal area pembungkus konten utama */
-        .container.mb-5 {
-            flex: 1;
-            min-height: 450px;
-        }
-
-        /* Kontainer Utama dengan Dua Gambar Aset Sekaligus (Kiri & Kanan) */
-
-        /* Kontainer Utama Hero dengan Animasi Slideshow Fade Otomatis */
-        /* Kontainer Utama Hero (Ukuran Asli Sesuai Kode Awal Anda) */
         .hero-wrapper-premium {
             position: relative;
-            min-height: 70vh;
-            /* <--- Dikembalikan ke ukuran 70vh asli bawaan Anda */
+            min-height: 55vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            /* Memastikan lapisan gambar slideshow tidak bocor keluar */
             background-color: #000;
         }
 
-        /* Lapisan Khusus Jalur Slideshow 3 Gambar (Posisi Teratas 'center top') */
+        /* Automatic cross-fade slideshow */
         .hero-wrapper-premium::before {
             content: "";
             position: absolute;
@@ -52,723 +69,368 @@
             left: 0;
             width: 100%;
             height: 100%;
-
-            /* Mengunci posisi gambar dari sisi yang paling atas */
             background-position: center top;
             background-size: cover;
             background-repeat: no-repeat;
-
-            /* Lapisan gradasi gelap permanen agar teks di atasnya tetap tajam */
             background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65));
-
-            /* Durasi total 15 detik untuk 3 gambar (berputar selamanya) */
             animation: gantiGambar3Fade 15s infinite ease-in-out;
             z-index: 1;
         }
 
-        /* Memastikan teks/konten hero Anda tetap berada di lapisan paling atas */
-        .hero-wrapper-premium>* {
+        .hero-wrapper-premium > * {
             position: relative;
             z-index: 2;
         }
 
-        /* LOGIKA ANIMASI FADE HALUS 3 GAMBAR */
         @keyframes gantiGambar3Fade {
-
-            /* --- GAMBAR 1 (book-1) --- */
-            0%,
-            30% {
+            0%, 30% {
                 background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
                     url('/asset/book-4.jpg');
             }
-
-            /* Transisi ke Gambar 2 */
             33.33% {
                 background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
                     url('/asset/book-2.jpg');
             }
-
-            /* --- GAMBAR 2 (book-2) --- */
-            36.66%,
-            63.33% {
+            36.66%, 63.33% {
                 background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
                     url('/asset/book-2.jpg');
             }
-
-            /* Transisi ke Gambar 3 */
             66.66% {
                 background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
                     url('/asset/book-3.jpg');
             }
-
-            /* --- GAMBAR 3 (book-3) --- */
-            70%,
-            96.66% {
+            70%, 96.66% {
                 background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
                     url('/asset/book-3.jpg');
             }
-
-            /* Kembali ke awal secara mulus */
             100% {
                 background-image:
-                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)),
                     url('/asset/book-4.jpg');
             }
         }
 
-        /* Navbar Utama (Posisi Awal) */
+        /* Navbar dynamic blur scroll effect */
         .navbar-kampus {
-            background: #ffffff !important;
-            padding: 16px 0;
-            /* Sedikit dipertebal di awal agar efek transisi mengecilnya terasa */
-            position: fixed !important;
-            /* Mengubah menjadi fixed agar bisa melayang */
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            /* Memastikan navbar berada di lapisan paling atas */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: all 0.4s ease-in-out;
-            /* Animasi smooth untuk semua perubahan */
+            transition: all 0.3s ease-in-out;
         }
-
-        /* Kelas Tambahan Saat Di-scroll (Akan dipicu oleh JavaScript) */
         .navbar-kampus.navbar-scrolled {
-            background: rgba(255, 255, 255, 0.85) !important;
-            /* Efek Putih Transparan Premium */
-            backdrop-filter: blur(30px);
-            /* Efek blur kaca (frosted glass) di belakang navbar */
-            -webkit-backdrop-filter: blur(30px);
-            /* Dukungan untuk Safari */
-            padding: 8px 0;
-            /* Efek animasi mengecil (shrink) yang elegan */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            /* Bayangan sedikit lebih tegas saat melayang */
+            background-color: rgba(255, 255, 255, 0.85) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding-top: 0.75rem !important;
+            padding-bottom: 0.75rem !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border-color: rgba(241, 245, 249, 0.8);
         }
 
-        /* PENTING: Karena navbar diubah menjadi 'fixed', beri kompensasi ruang pada elemen berikutnya 
-   agar konten teratas tidak tertutup/tertimbun di bawah navbar */
-        .hero-wrapper-premium {
-            padding-top: 80px;
-            /* Menyesuaikan dengan tinggi navbar */
-        }
-
-        /* Identitas Sistem Navigasi (Warna Gelap Kontras) */
-        .judul-sistem {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #1e293b !important;
-            line-height: 1.2;
-        }
-
-        .sub-judul-sistem {
-            font-size: 0.8rem;
-            color: #64748b !important;
-            font-weight: 400;
-        }
-
-        /* Menu Navigasi Sebelah Kanan (Warna Gelap) */
-        .navbar-menu-kanan {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .navbar-menu-kanan li a {
-            color: #475569 !important;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .navbar-menu-kanan li a:hover,
-        .navbar-menu-kanan li.active a {
-            color: #0f172a !important;
-            font-weight: 600;
-        }
-
-        /* Area Konten Tengah Hero */
-        .hero-body-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding-bottom: 80px;
-        }
-
-        .brand-kampus-besar {
-            max-width: 800px;
-        }
-
-        .brand-kampus-besar h2 {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #ffffff;
-            letter-spacing: 1px;
-            margin: 0;
-            text-transform: uppercase;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
-        }
-
-        /* Logo Brand */
-        .logo-placeholder {
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .logo-placeholder img {
-            height: 100%;
-            width: auto;
-            object-fit: contain;
-        }
-
-        /* Bar Pencarian Mengambang */
-        .search-section-floating {
-            position: relative;
-            margin-top: -30px;
-            padding-bottom: 60px;
-            z-index: 30;
-        }
-
-        .search-container-premium {
-            background: #ffffff;
-            border-radius: 50px !important;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 10px 24px;
-        }
-
-        /* Wrapper Utama Input agar Tanda X Mengunci di Dalam Sisi Kanan */
-        .search-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        /* Input Pencarian Premium */
-        .search-input-premium {
-            border: none !important;
-            outline: none !important;
-            font-size: 1.05rem;
-            box-shadow: none !important;
-            background: transparent !important;
-            padding-right: 45px !important;
-            /* Ruang agar teks tidak menabrak tanda X */
-            width: 100%;
-        }
-
-        /* Tanda X Mengambang Sempurna di Sisi Kanan Dalam Input */
-        .btn-clear-search {
-            position: absolute !important;
-            right: 20px !important;
-            top: 50% !important;
-            transform: translateY(-50%) !important;
-            background: none !important;
-            border: none !important;
-            font-size: 1.3rem !important;
-            color: #94a3b8 !important;
-            cursor: pointer;
-            z-index: 10;
-            line-height: 1 !important;
-            padding: 0 !important;
-            display: none;
-            /* Dikontrol via JS */
-            transition: color 0.2s;
-        }
-
-        .btn-clear-search:hover {
-            color: #475569 !important;
-        }
-
-        /* 1. Grid Utama yang Presisi */
-        .book-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-            /* Lebar dioptimalkan */
-            gap: 24px;
-        }
-
-        /* 2. Struktur Card Buku Modern */
-        .book-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            /* Melengkung lebih halus & modern */
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            /* Efek animasi hover lebih sinematik */
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-        }
-
-        /* Efek Hover Mengambang Lembut */
-        .book-card:hover {
-            transform: translateY(-5px);
-            /* Card sedikit terangkat ke atas saat di-hover */
-            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-            border-color: #cbd5e1;
-        }
-
-        /* 3. Area Sampul / Cover Placeholder */
-        .book-cover-placeholder {
-            height: 250px;
-            background-color: #f8fafc;
-            border-bottom: 1px solid #f1f5f9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-            text-align: center;
-            position: relative;
-        }
-
-        .cover-inisial {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #334155;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        /* 4. Area Informasi Konten (Flexbox diaktifkan agar tinggi merata) */
-        .book-info {
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            /* Memaksa area ini mengisi sisa ruang yang kosong */
-        }
-
-        /* Kategori & Ketersediaan di Baris Atas */
-        .book-category {
-            font-size: 0.75rem;
-            color: #2563eb;
-            /* Warna biru aksen premium */
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Judul Buku (Dikunci maksimal 2 baris agar tetap sejajar) */
-        .book-title {
-            font-size: 1rem;
-            font-weight: 600;
-            /* Diturunkan dari 700 ke 600 agar tidak terlalu kaku dan terasa lebih halus */
-            color: #334155;
-            /* Diubah dari #0f172a ke warna charcoal yang lebih teduh di mata */
-            line-height: 1.45;
-            /* Jarak antar baris sedikit dilonggarkan agar teks terasa bernapas */
-            margin-top: 12px;
-            margin-bottom: 0;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 4.35em;
-            transition: color 0.2s ease;
-            /* Transisi halus jika ada interaksi */
-        }
-
-        /* Pengarang & Penerbit */
-        .book-author {
-            font-size: 0.85rem;
-            color: #475569;
-            font-weight: 500;
-            margin-bottom: 2px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .book-publisher {
-            font-size: 0.8rem;
-            color: #94a3b8;
-            margin-bottom: 16px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* 5. Footer Metadata (Nama Donatur & Rak Otomatis Mengunci di Paling Bawah) */
-        .book-metadata-footer {
-            margin-top: auto;
-            /* Tetap mengunci posisi di paling bawah card */
-            border-top: 1px solid #f1f5f9;
-            padding-top: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        /* Label Kecil "DONATUR" di Atas Nama */
-        .donor-label {
-            font-size: 0.7rem;
-            color: #94a3b8;
-            /* Diubah ke abu-abu yang lebih tenang */
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            font-weight: 700;
-            margin-bottom: -2px;
-        }
-
-        /* IMPROVISASI: Gaya Baru untuk Nama Donatur (Menggunakan Background Badge) */
-        .donor-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #1e3a8a;
-            /* Warna biru navy gelap agar teks terbaca tajam */
-            background-color: #eff6ff;
-            /* Background biru muda yang sangat lembut */
-            padding: 6px 12px;
-            /* Memberikan ruang napas di dalam background */
-            border-radius: 8px;
-            /* Melengkung serasi dengan card utama */
-            display: inline-block;
-            align-self: flex-start;
-            /* Lebar background otomatis mengikuti panjang nama, tidak meluber */
-            max-width: 100%;
-            /* Menjaga agar nama super panjang tidak merusak tata letak */
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            /* Jika nama terlalu panjang, otomatis terpotong rapi dengan titik-titik (...) */
-            border: 1px solid #dbeafe;
-            /* Garis tepi tipis agar badge terlihat lebih berdimensi */
-        }
-
-        /* Badge Lokasi / Rak Buku (Disesuaikan agar serasi dengan Badge Donatur) */
-        .location-badge {
-            align-self: flex-start;
-            background-color: #f8fafc;
-            color: #64748b;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            border: 1px solid #e2e8f0;
-        }
-
-
-        /* Sembunyikan kontrol bawaan DataTables */
-        #tabelBuku_wrapper .dataTables_filter,
-        #tabelBuku_wrapper .dataTables_length,
-        #tabelBuku_wrapper .dataTables_info {
-            display: none !important;
-        }
-
-        /* Footer Premium */
-        .footer-kampus-premium {
-            background-color: #2c3e50;
-            color: #ffffff !important;
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        .footer-kampus-premium h5 {
-            font-weight: 700;
-            color: #ffffff !important;
-            margin-bottom: 20px;
-            font-size: 1.15rem;
-        }
-
-        .text-deskripsi-footer {
-            color: #ffffff !important;
-            line-height: 1.6;
-            text-align: justify;
-            font-size: 0.85rem;
-        }
-
-        .footer-kampus-premium span,
-        .footer-kampus-premium p,
-        .footer-kampus-premium div {
-            color: #ffffff !important;
-        }
-
-        /* Efek Animasi Skeleton Loading */
-        .skeleton-card {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .skeleton-img {
-            height: 240px;
-            background: #e2e8f0;
-        }
-
-        .skeleton-text {
-            background: #e2e8f0;
-            border-radius: 4px;
-            margin-bottom: 10px;
-        }
-
+        /* Pulse animation skeleton loader */
         .pulse {
             animation: pulseAnimation 1.5s infinite ease-in-out;
         }
 
         @keyframes pulseAnimation {
-            0% {
-                opacity: 0.6;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.6;
-            }
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
         }
 
-        @media (max-width: 768px) {
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
 
-            /* 1. Menyesuaikan Tinggi Hero agar Proporsional di HP */
-            .hero-wrapper-premium {
-                min-height: 60vh !important;
-                /* Sedikit dikurangi agar proporsi gambar di HP tetap estetik */
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-            /* 2. Memperkecil Ukuran Judul Utama Kampus agar Tidak Kepotong/Patah */
-            .brand-kampus-besar h2 {
-                font-size: 1.85rem !important;
-                /* Diturunkan dari 3rem ke 1.85rem khusus di HP */
-                line-height: 1.3 !important;
-                /* Memberi jarak antar baris yang pas */
-                padding: 0 15px;
-                /* Memberi jarak aman di kiri-kanan layar HP */
-                letter-spacing: 0.5px !important;
-            }
-
-            /* 3. Menyesuaikan Spasi Area Konten Tengah */
-            .hero-body-content {
-                padding-top: 40px !important;
-                padding-bottom: 60px !important;
-                /* Memberi ruang napas untuk bar pencarian di bawahnya */
-            }
-
-            /* 4. Menyesuaikan Padding Bar Pencarian Mengambang di HP */
-            .search-container-premium {
-                padding: 8px 16px !important;
-                /* Sedikit lebih tipis agar muat di layar HP yang sempit */
-                margin: 0 10px;
-                /* Mencegah kotak search menempel ke pinggir layar HP */
-            }
-
-            .search-input-premium {
-                font-size: 0.95rem !important;
-                /* Ukuran teks pencarian disesuaikan */
-            }
+        /* Hide DataTable UI helper components */
+        .dataTables_wrapper .dataTables_filter,
+        .dataTables_wrapper .dataTables_length,
+        .dataTables_wrapper .dataTables_info,
+        .dataTables_wrapper .dataTables_paginate {
+            display: none !important;
         }
     </style>
 </head>
 
-<body>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
 
-    <div class="hero-wrapper-premium">
-
-        <nav class="navbar-kampus">
-            <div class="container d-flex justify-content-between align-items-center">
-
-                <div class="d-flex align-items-center gap-2">
-                    <img src="/asset/logo.png" alt="Logo ST Bhinneka" height="42" style="object-fit: contain;">
-                    <div>
-                        <div class="judul-sistem">Donasi Buku Perpustakaan ST Bhinneka</div>
-                        <div class="sub-judul-sistem">Inventaris Data Donasi Buku Perpustakaan</div>
-                    </div>
+    <!-- Sticky Navbar -->
+    <nav class="navbar-kampus fixed top-0 left-0 w-full z-50 bg-white/85 backdrop-blur-md border-b border-slate-100 py-4">
+        <div class="container mx-auto px-4 max-w-6xl flex justify-between items-center">
+            <!-- Left Logo Brand -->
+            <a href="#" class="flex items-center gap-3 group">
+                <img src="/asset/logo.png" alt="Logo ST Bhinneka" class="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+                <div>
+                    <div class="font-extrabold text-slate-900 text-sm md:text-base leading-tight">Donasi Buku ST Bhinneka</div>
+                    <div class="text-[10px] md:text-xs text-slate-500 font-semibold tracking-wide">Perpustakaan Universitas Satya Terra Bhinneka</div>
                 </div>
-
-                <ul class="navbar-menu-kanan d-none d-lg-flex">
-                    <li class="active"><a href="#">Beranda</a></li>
-                    <li><a href="#">E-Library</a></li>
+            </a>
+            
+            <!-- Right Navigation and Admin -->
+            <div class="flex items-center gap-6">
+                <ul class="hidden md:flex items-center gap-6 font-bold text-sm text-slate-650">
+                    <li><a href="#" class="hover:text-primary-600 transition-colors duration-200">Katalog Donasi</a></li>
                 </ul>
-
-            </div>
-        </nav>
-
-        <div class="hero-body-content">
-            <div class="container brand-kampus-besar">
-                <img src="/asset/logo.png" alt="Logo Besar" height="90" class="mb-3"
-                    style="filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5));">
-                <h2>UNIVERSITAS<br>SATYA TERRA BHINNEKA</h2>
+                
+                <a href="/admin/import" class="bg-primary-50 hover:bg-primary-100 text-primary-700 font-extrabold text-xs px-4 py-2 rounded-full border border-primary-200 transition duration-200 flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-right-to-bracket text-xs"></i> Admin Panel
+                </a>
             </div>
         </div>
+    </nav>
 
-    </div>
-
-    <div class="search-section-floating">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-7">
-                    <!-- <p class="text-center text-muted small mb-2" id="totalBuku" style="font-weight: 500;">Menghitung
-                        total koleksi buku...</p> -->
-
-                    <div class="search-wrapper search-container-premium d-flex align-items-center px-4 py-2">
-                        <input type="text" id="pencarianGramedia" class="form-control search-input-premium w-100"
-                            placeholder="Ketik nama donasi atau judul buku ...">
-
-                        <button type="button" id="btnClearSearch" class="btn-clear-search me-2"
-                            title="Bersihkan Pencarian"
-                            style="position:static; transform:none; display:none;">&times;</button>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <div class="hero-wrapper-premium relative flex flex-col justify-center items-center overflow-hidden pt-28 pb-20">
+        <div class="relative z-10 container mx-auto px-4 max-w-4xl text-center space-y-5">
+            <img src="/asset/logo.png" alt="Logo ST Bhinneka" class="h-20 mx-auto drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
+            <div class="space-y-1.5">
+                <span class="text-[10px] md:text-xs font-black uppercase tracking-[0.25em] text-blue-300 drop-shadow-md">Sistem Inventaris Data</span>
+                <h1 class="text-2xl md:text-4xl font-black tracking-tight leading-tight uppercase drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)] text-white">
+                    Donasi Buku Perpustakaan ST Bhinneka
+                </h1>
             </div>
+            <p class="text-xs md:text-sm text-slate-100 max-w-2xl mx-auto font-semibold leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
+                Program donasi buku ini dirancang untuk menghimpun kontribusi literasi dari segenap sivitas akademika dan masyarakat luas. Di sini, Anda dapat memantau secara terbuka data donatur, daftar judul buku yang disumbangkan, serta posisi rak penempatannya di perpustakaan Universitas Satya Terra Bhinneka.
+            </p>
         </div>
     </div>
 
-    <!-- <div class="search-section text-center">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <p class="text-muted small mb-2" id="totalBuku">Menghitung total koleksi buku...</p>
-                    <input type="text" id="pencarianGramedia" class="form-control search-input-premium text-center"
-                        placeholder="Cari berdasarkan judul, pengarang, penerbit, atau donatur...">
+    <!-- Floating Statistics Summary Section -->
+    <div class="relative -mt-14 z-20 container mx-auto px-4 max-w-6xl">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 bg-white rounded-3xl p-5 shadow-2xl border border-slate-100">
+            <!-- Stat Card 1 -->
+            <div class="bg-slate-50/70 p-4 rounded-2xl flex flex-col justify-center items-center text-center border border-slate-100/50">
+                <div class="w-10 h-10 bg-primary-50 text-primary-600 rounded-xl flex items-center justify-center mb-2 shadow-sm border border-primary-100">
+                    <i class="fa-solid fa-book-bookmark text-base"></i>
                 </div>
+                <div id="statTotalBuku" class="text-xl md:text-2xl font-black text-slate-800">...</div>
+                <div class="text-[10px] md:text-[11px] font-bold tracking-wider text-slate-500 uppercase mt-1">Buku Terkumpul</div>
             </div>
-        </div>
-    </div> -->
-    <!-- <div class="search-section text-center">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <p class="text-muted small mb-2" id="totalBuku">Menghitung total koleksi buku...</p>
-                    <div class="search-wrapper">
-                        <input type="text" id="pencarianGramedia" class="form-control search-input-premium text-center"
-                            placeholder="Cari berdasarkan judul, pengarang, penerbit, atau donatur...">
-                        <button type="button" id="btnClearSearch" class="btn-clear-search"
-                            title="Bersihkan Pencarian">&times;</button>
-                    </div>
+            <!-- Stat Card 2 -->
+            <div class="bg-slate-50/70 p-4 rounded-2xl flex flex-col justify-center items-center text-center border border-slate-100/50">
+                <div class="w-10 h-10 bg-rose-50 text-rose-600 rounded-xl flex items-center justify-center mb-2 shadow-sm border border-rose-100">
+                    <i class="fa-solid fa-hand-holding-heart text-base"></i>
                 </div>
+                <div id="statTotalDonatur" class="text-xl md:text-2xl font-black text-slate-800">...</div>
+                <div class="text-[10px] md:text-[11px] font-bold tracking-wider text-slate-500 uppercase mt-1">Donatur Berpartisipasi</div>
             </div>
-        </div>
-    </div> -->
-
-    <div class="container mb-5">
-        <table id="tabelBuku" class="d-none">
-            <thead>
-                <tr>
-                    <th>SearchText</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-
-        <div id="loadingState" class="text-center my-5">
-            <div class="spinner-border text-secondary" role="status"></div>
-            <p class="mt-2 text-muted small">Memuat data inventaris perpustakaan...</p>
-        </div>
-
-        <div class="book-grid" id="containerBuku"></div>
-        <!-- Kontainer Skeleton Loading (Tersembunyi secara default) -->
-        <div class="book-grid d-none" id="containerSkeleton">
-            <!-- Kita buat 8 card tiruan untuk mewakili proses loading -->
-            <div class="skeleton-card pulse">
-                <div class="skeleton-img"></div>
-                <div class="p-3">
-                    <div class="skeleton-text" style="width: 40%; height: 12px;"></div>
-                    <div class="skeleton-text" style="width: 85%; height: 18px; margin-bottom: 15px;"></div>
-                    <div class="skeleton-text" style="width: 60%; height: 14px;"></div>
-                    <div class="skeleton-text" style="width: 50%; height: 12px; margin-bottom: 20px;"></div>
-                    <div class="skeleton-text" style="width: 100%; height: 35px; margin-top: auto;"></div>
+            <!-- Stat Card 3 -->
+            <div class="bg-slate-50/70 p-4 rounded-2xl flex flex-col justify-center items-center text-center border border-slate-100/50">
+                <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-xl flex items-center justify-center mb-2 shadow-sm border border-amber-100">
+                    <i class="fa-solid fa-tags text-base"></i>
                 </div>
+                <div id="statTotalKategori" class="text-xl md:text-2xl font-black text-slate-800">...</div>
+                <div class="text-[10px] md:text-[11px] font-bold tracking-wider text-slate-500 uppercase mt-1">Kategori Buku</div>
             </div>
-            <!-- Ulangi sampai 4 atau 8 kotak agar memenuhi layar (Bisa copas blok div skeleton-card di atas sebanyak 4-8 kali jika ingin grid penuh) -->
-            <div class="skeleton-card pulse">
-                <div class="skeleton-img"></div>
-                <div class="p-3">
-                    <div class="skeleton-text" style="width: 40%; height: 12px;"></div>
-                    <div class="skeleton-text" style="width: 85%; height: 18px;"></div>
+            <!-- Stat Card 4 -->
+            <div class="bg-slate-50/70 p-4 rounded-2xl flex flex-col justify-center items-center text-center border border-slate-100/50">
+                <div class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center mb-2 shadow-sm border border-emerald-100">
+                    <i class="fa-solid fa-map-location-dot text-base"></i>
                 </div>
-            </div>
-            <div class="skeleton-card pulse">
-                <div class="skeleton-img"></div>
-                <div class="p-3">
-                    <div class="skeleton-text" style="width: 40%; height: 12px;"></div>
-                    <div class="skeleton-text" style="width: 85%; height: 18px;"></div>
-                </div>
-            </div>
-            <div class="skeleton-card pulse">
-                <div class="skeleton-img"></div>
-                <div class="p-3">
-                    <div class="skeleton-text" style="width: 40%; height: 12px;"></div>
-                    <div class="skeleton-text" style="width: 85%; height: 18px;"></div>
-                </div>
+                <div class="text-xl md:text-2xl font-black text-slate-800">Gedung Rektorat</div>
+                <div class="text-[10px] md:text-[11px] font-bold tracking-wider text-slate-500 uppercase mt-1">Penerimaan Lantai 2</div>
             </div>
         </div>
     </div>
 
-    <!-- Footer Resmi Universitas Satya Terra Bhinneka (Bersih, Putih, Tanpa Tombol SLiMS) -->
-    <footer class="footer-kampus-premium pt-5 pb-4 mt-5">
-        <div class="container">
-            <div class="row g-4">
-
-                <!-- Kolom 1: Identitas Resmi -->
-                <div class="col-md-3">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <img src="/asset/logo.png" alt="Logo" height="40" style="object-fit: contain;">
-                        <span class="fw-bold small">Donasi Buku Perpustakaan ST Bhinneka</span>
+    <!-- Main Catalog Section -->
+    <section id="katalog-buku" class="py-16 bg-slate-50 flex-grow">
+        <div class="container mx-auto px-4 max-w-6xl">
+            
+            <!-- Header Catalog -->
+            <div class="text-center mb-10">
+                <span class="text-xs font-bold uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full border border-primary-100">Katalog Donasi</span>
+                <h2 class="text-2xl md:text-3xl font-black text-slate-800 mt-3">Koleksi Buku Terinventaris</h2>
+                <p id="totalBuku" class="text-slate-500 mt-2 max-w-xl mx-auto text-sm font-semibold">Menghitung total koleksi buku...</p>
+            </div>
+            
+            <!-- Modern Search Box -->
+            <div class="max-w-2xl mx-auto mb-12">
+                <div class="relative bg-white rounded-2xl border border-slate-200 hover:border-primary-400 focus-within:border-primary-500 focus-within:ring-4 focus-within:ring-primary-100 shadow-md flex items-center px-4 py-2.5 transition duration-200">
+                    <div class="text-slate-400 mr-3 flex items-center justify-center">
+                        <i class="fa-solid fa-magnifying-glass text-lg"></i>
                     </div>
-                    <p class="small" style="font-size: 0.8rem; line-height: 1.4;">
-                        Sistem Inventarisasi Data Donasi Buku Universitas Satya Terra Bhinneka.
+                    <input type="text" id="pencarianGramedia" class="w-full text-slate-700 placeholder-slate-400 bg-transparent border-none outline-none focus:ring-0 text-sm md:text-base font-semibold" placeholder="Ketik nama donatur, judul buku, kategori, penerbit, atau penulis...">
+                    <button type="button" id="btnClearSearch" class="text-slate-400 hover:text-slate-650 ml-2" title="Bersihkan Pencarian" style="display: none;">
+                        <i class="fa-solid fa-circle-xmark text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Hidden DataTable Table for query matches -->
+            <table id="tabelBuku" class="hidden">
+                <thead>
+                    <tr>
+                        <th>SearchText</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            
+            <!-- Initial Loading Spinner -->
+            <div id="loadingState" class="flex flex-col items-center justify-center py-20 text-center">
+                <div class="w-12 h-12 border-4 border-slate-200 border-t-primary-600 rounded-full animate-spin"></div>
+                <p class="mt-4 text-slate-500 text-sm font-semibold">Memuat database buku perpustakaan...</p>
+            </div>
+            
+            <!-- Dynamic Cards Container Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="containerBuku"></div>
+            
+            <!-- Skeleton cards (during keyup debouncing) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden" id="containerSkeleton">
+                <!-- Skeleton Card 1 -->
+                <div class="skeleton-card flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm pulse">
+                    <div class="w-full h-56 bg-slate-200"></div>
+                    <div class="p-5 flex flex-col flex-grow space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="w-20 h-4 bg-slate-200 rounded-full"></div>
+                            <div class="w-12 h-3 bg-slate-200 rounded-full"></div>
+                        </div>
+                        <div class="w-full h-5 bg-slate-200 rounded-md"></div>
+                        <div class="w-3/4 h-4 bg-slate-200 rounded-md"></div>
+                        <div class="space-y-1 pt-2">
+                            <div class="w-1/2 h-3 bg-slate-200 rounded"></div>
+                            <div class="w-2/3 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                        <div class="border-t border-slate-100 pt-3 mt-auto flex items-center gap-2">
+                            <div class="w-7 h-7 bg-slate-200 rounded-full"></div>
+                            <div class="w-24 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Skeleton Card 2 -->
+                <div class="skeleton-card flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm pulse">
+                    <div class="w-full h-56 bg-slate-200"></div>
+                    <div class="p-5 flex flex-col flex-grow space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="w-20 h-4 bg-slate-200 rounded-full"></div>
+                            <div class="w-12 h-3 bg-slate-200 rounded-full"></div>
+                        </div>
+                        <div class="w-full h-5 bg-slate-200 rounded-md"></div>
+                        <div class="w-3/4 h-4 bg-slate-200 rounded-md"></div>
+                        <div class="space-y-1 pt-2">
+                            <div class="w-1/2 h-3 bg-slate-200 rounded"></div>
+                            <div class="w-2/3 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                        <div class="border-t border-slate-100 pt-3 mt-auto flex items-center gap-2">
+                            <div class="w-7 h-7 bg-slate-200 rounded-full"></div>
+                            <div class="w-24 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Skeleton Card 3 -->
+                <div class="skeleton-card flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm pulse">
+                    <div class="w-full h-56 bg-slate-200"></div>
+                    <div class="p-5 flex flex-col flex-grow space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="w-20 h-4 bg-slate-200 rounded-full"></div>
+                            <div class="w-12 h-3 bg-slate-200 rounded-full"></div>
+                        </div>
+                        <div class="w-full h-5 bg-slate-200 rounded-md"></div>
+                        <div class="w-3/4 h-4 bg-slate-200 rounded-md"></div>
+                        <div class="space-y-1 pt-2">
+                            <div class="w-1/2 h-3 bg-slate-200 rounded"></div>
+                            <div class="w-2/3 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                        <div class="border-t border-slate-100 pt-3 mt-auto flex items-center gap-2">
+                            <div class="w-7 h-7 bg-slate-200 rounded-full"></div>
+                            <div class="w-24 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Skeleton Card 4 -->
+                <div class="skeleton-card flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm pulse">
+                    <div class="w-full h-56 bg-slate-200"></div>
+                    <div class="p-5 flex flex-col flex-grow space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div class="w-20 h-4 bg-slate-200 rounded-full"></div>
+                            <div class="w-12 h-3 bg-slate-200 rounded-full"></div>
+                        </div>
+                        <div class="w-full h-5 bg-slate-200 rounded-md"></div>
+                        <div class="w-3/4 h-4 bg-slate-200 rounded-md"></div>
+                        <div class="space-y-1 pt-2">
+                            <div class="w-1/2 h-3 bg-slate-200 rounded"></div>
+                            <div class="w-2/3 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                        <div class="border-t border-slate-100 pt-3 mt-auto flex items-center gap-2">
+                            <div class="w-7 h-7 bg-slate-200 rounded-full"></div>
+                            <div class="w-24 h-3 bg-slate-200 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white pt-16 pb-8 mt-auto border-t border-slate-800">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-8 mb-12">
+                <!-- University Identity column -->
+                <div class="md:col-span-4 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <img src="/asset/logo.png" alt="Logo" class="h-12 w-auto object-contain">
+                        <span class="font-extrabold text-sm leading-tight text-slate-100">Donasi Buku<br>Perpustakaan ST Bhinneka</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Sistem Informasi Inventarisasi donasi buku online untuk memperluas akses literasi civitas akademika Universitas Satya Terra Bhinneka.
+                    </p>
+                </div>
+                
+                <!-- About description column -->
+                <div class="md:col-span-5 space-y-4">
+                    <h5 class="text-sm font-extrabold uppercase tracking-wider text-slate-100">Tentang Program</h5>
+                    <p class="text-xs text-slate-400 leading-relaxed text-justify">
+                        Program Donasi Buku merupakan wujud kepedulian bersama dalam meningkatkan kualitas pendidikan. Setiap buku yang disumbangkan disortir, didata ke sistem ini, dan ditempatkan di rak-rak perpustakaan agar mudah ditemukan dan dibaca oleh mahasiswa yang memerlukan referensi tambahan.
                     </p>
                 </div>
 
-                <!-- Kolom 2: Tentang Kami -->
-                <div class="col-md-6">
-                    <h5>Tentang Kami</h5>
-                    <p class="small">
-                        Perpustakaan Universitas Satya Terra Bhinneka merupakan unit penunjang utama kegiatan
-                        akademik,
-                        penelitian, dan pengabdian masyarakat di Provinsi Sumatera Utara. Kami berkomitmen untuk
-                        menyediakan akses tak terbatas terhadap sumber informasi global serta layanan literasi yang
-                        tepat waktu, tepat guna, dan berkelanjutan demi mendukung ekosistem pendidikan yang unggul.
-                    </p>
+                <!-- Contact / Info column -->
+                <div class="md:col-span-3 space-y-4">
+                    <h5 class="text-sm font-extrabold uppercase tracking-wider text-slate-100">Kontak & Lokasi</h5>
+                    <ul class="text-xs text-slate-400 space-y-2">
+                        <li><i class="fa-solid fa-clock mr-2 text-primary-400"></i> Senin - Jumat: 08:30 - 16:30</li>
+                        <li><i class="fa-solid fa-location-dot mr-2 text-primary-400"></i> Gedung Rektorat Lt. 2, Medan</li>
+                        <li><i class="fa-solid fa-envelope mr-2 text-primary-400"></i> perpustakaan@stbhinneka.ac.id</li>
+                    </ul>
                 </div>
-
-
             </div>
 
-            <!-- Copyright -->
-            <div class="text-center mt-5 pt-3 border-top border-secondary">
-                <p class="small m-0">&copy; 2026 Universitas Satya Terra Bhinneka. All Rights Reserved.</p>
+            <!-- Copyright area -->
+            <div class="text-center pt-8 border-t border-slate-800 text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p>&copy; 2026 Universitas Satya Terra Bhinneka. Hak Cipta Dilindungi.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- Libraries: jQuery and DataTables -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+    <!-- Scroll behavior script -->
     <script>
         $(window).on('scroll', function () {
-            // Jika halaman di-scroll lebih dari 20 piksel ke bawah
-            if ($(window).scrollTop() > 20) {
+            if ($(window).scrollTop() > 30) {
                 $('.navbar-kampus').addClass('navbar-scrolled');
             } else {
-                // Kembali ke tampilan solid semula saat mentok di atas
                 $('.navbar-kampus').removeClass('navbar-scrolled');
             }
         });
     </script>
+
+    <!-- Application Script -->
     <script>
         $(document).ready(function () {
             fetch('/api/buku')
@@ -777,38 +439,85 @@
                     $('#loadingState').remove();
                     $('#totalBuku').text(`Menampilkan ${data.length.toLocaleString('id-ID')} koleksi buku donasi aktif`);
 
+                    // 1. Hitung dan Tampilkan Statistik Dinamis
+                    const totalBuku = data.reduce((sum, item) => sum + parseInt(item.jumlah_buku || 1), 0);
+                    const uniqueDonors = new Set(data.map(item => item.nama_donatur.trim().toLowerCase())).size;
+                    const uniqueCategories = new Set(data.map(item => item.kategori.trim().toLowerCase())).size;
+
+                    $('#statTotalBuku').text(totalBuku.toLocaleString('id-ID'));
+                    $('#statTotalDonatur').text(uniqueDonors.toLocaleString('id-ID'));
+                    $('#statTotalKategori').text(uniqueCategories.toLocaleString('id-ID'));
+
                     let tableRows = '';
                     let cardsHtml = '';
 
-                    const softColors = ['#f1f5f9', '#e2e8f0', '#fee2e2', '#fef3c7', '#dcfce7', '#e0f2fe'];
+                    function getCategoryGradient(category) {
+                        const cat = (category || '').toLowerCase().trim();
+                        if (cat.includes('fiksi') || cat.includes('novel') || cat.includes('sastra')) {
+                            return 'from-purple-500 to-indigo-600';
+                        } else if (cat.includes('teknologi') || cat.includes('komputer') || cat.includes('sains') || cat.includes('it')) {
+                            return 'from-blue-500 to-cyan-600';
+                        } else if (cat.includes('sejarah') || cat.includes('sosial') || cat.includes('politik')) {
+                            return 'from-amber-500 to-orange-600';
+                        } else if (cat.includes('edukasi') || cat.includes('pendidikan') || cat.includes('belajar') || cat.includes('matematika')) {
+                            return 'from-emerald-500 to-teal-600';
+                        } else if (cat.includes('pengembangan') || cat.includes('diri') || cat.includes('motivasi') || cat.includes('psikologi')) {
+                            return 'from-rose-500 to-pink-600';
+                        } else if (cat.includes('ekonomi') || cat.includes('bisnis') || cat.includes('keuangan')) {
+                            return 'from-indigo-500 to-blue-600';
+                        } else {
+                            return 'from-slate-500 to-slate-700';
+                        }
+                    }
 
                     data.forEach((buku, index) => {
-                        let bgColor = softColors[index % softColors.length];
+                        let gradientClass = getCategoryGradient(buku.kategori);
                         let inisial = buku.judul.substring(0, 2).toUpperCase();
-
-                        // Tambahkan class 'd-none' secara default jika index >= 40 
-                        // Supaya saat pertama dimuat, browser hanya merender 40 buku saja (Super Ringan!)
-                        // <div class="location-badge">Rak ${buku.rak}</div>
-
-                        let hiddenClass = (index >= 40) ? 'd-none' : '';
+                        let hiddenClass = (index >= 40) ? 'hidden' : '';
 
                         cardsHtml += `
-                        <div class="book-card card-item ${hiddenClass}" id="card-${index}">
-                            <div class="book-cover-placeholder" style="background-color: ${bgColor}">
-                                <div class="cover-inisial">${inisial}</div>
-                            </div>
-                            <div class="book-info">
-                                <div class="d-flex justify-content-between align-items-center mb-1">
-                                    <span class="book-category"></span>
-                                    <span class="text-muted small" style="font-size: 0.75rem;">Jumlah Buku: ${buku.jumlah_buku}</span>
+                        <div class="book-card card-item ${hiddenClass} flex flex-col bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300" id="card-${index}">
+                            <!-- Realistic Book Cover Placeholder -->
+                            <div class="relative w-full h-56 bg-gradient-to-br ${gradientClass} flex flex-col justify-between p-4 text-white overflow-hidden shadow-inner group-hover:scale-105 transition-transform duration-500">
+                                <div class="absolute top-0 bottom-0 left-0 w-2.5 bg-black/10 backdrop-blur-[0.5px]"></div>
+                                <div class="flex justify-between items-start z-10 w-full pl-2">
+                                    <span class="text-[9px] tracking-widest font-black uppercase bg-white/20 px-2 py-0.5 rounded-full backdrop-blur-sm">${buku.kategori}</span>
+                                    <i class="fa-solid fa-book text-white/30 text-base"></i>
                                 </div>
-                                <div class="book-title" title="${buku.judul}">${buku.judul}</div>
-                                <div class="book-author"> Penulis: ${buku.pengarang}</div>
-                                <div class="book-publisher">Penerbit: ${buku.penerbit}</div>
-                                
-                                <div class="book-metadata-footer">
-                                    <div class="donor-label">Nama Pendonasi : </div>
-                                    <div class="donor-name">${buku.nama_donatur}</div>
+                                <div class="flex flex-col z-10 w-full pl-2 mt-4">
+                                    <div class="text-[10px] text-white/70 font-semibold tracking-wider uppercase truncate" title="${buku.pengarang}">${buku.pengarang}</div>
+                                    <div class="font-extrabold text-sm leading-tight mt-1 line-clamp-3 drop-shadow-md" title="${buku.judul}">${buku.judul}</div>
+                                </div>
+                                <div class="flex justify-between items-center z-10 w-full pl-2 border-t border-white/20 pt-2 mt-2">
+                                    <span class="text-[9px] text-white/60 tracking-wider truncate max-w-[70%]">${buku.penerbit}</span>
+                                    <span class="text-[10px] font-black bg-white text-slate-900 px-1.5 py-0.5 rounded shadow">${inisial}</span>
+                                </div>
+                            </div>
+
+                            <!-- Card Body Information -->
+                            <div class="flex flex-col flex-grow p-5 bg-white">
+                                <div class="flex justify-between items-center mb-3">
+                                    <span class="text-[10px] font-bold text-primary-700 bg-primary-50 border border-primary-100 rounded-full px-2.5 py-0.5 uppercase tracking-wide">${buku.kategori}</span>
+                                    <span class="text-xs text-slate-500 font-semibold"><i class="fa-solid fa-copy mr-1 text-slate-400"></i> ${buku.jumlah_buku} Buku</span>
+                                </div>
+                                <h3 class="text-sm font-extrabold text-slate-800 leading-snug mb-3 line-clamp-2 hover:text-primary-600 transition-colors duration-200 cursor-pointer" title="${buku.judul}">
+                                    ${buku.judul}
+                                </h3>
+                                <div class="space-y-1.5 text-xs text-slate-650 mb-4 flex-grow font-semibold">
+                                    <div class="flex justify-between border-b border-slate-50 pb-1.5"><span class="text-slate-400 font-medium">Penulis</span> <span class="text-slate-800 font-bold truncate max-w-[70%]">${buku.pengarang}</span></div>
+                                    <div class="flex justify-between border-b border-slate-50 pb-1.5"><span class="text-slate-400 font-medium">Penerbit</span> <span class="text-slate-800 font-bold truncate max-w-[70%]">${buku.penerbit}</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-400 font-medium">Rak</span> <span class="bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold text-[10px]">${buku.rak}</span></div>
+                                </div>
+                                <div class="border-t border-slate-100 pt-3 mt-auto">
+                                    <span class="block text-[9px] font-bold tracking-widest text-slate-400 uppercase mb-1.5">Pendonasi</span>
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-gradient-to-tr from-primary-600 to-indigo-650 text-white flex items-center justify-center font-black text-[10px] shadow-sm">
+                                            ${buku.nama_donatur.charAt(0).toUpperCase()}
+                                        </div>
+                                        <div class="text-xs font-bold text-slate-800 truncate max-w-[150px]" title="${buku.nama_donatur}">
+                                            ${buku.nama_donatur}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -831,11 +540,11 @@
                     function resetKeAwal() {
                         $('#pencarianGramedia').val('');
                         $('#btnClearSearch').hide();
-                        $('#pesanKosong').remove(); // Pastikan pesan kosong ikut terhapus saat di-reset
-                        $('#containerSkeleton').addClass('d-none');
-                        $('#containerBuku').removeClass('d-none');
-                        $('.card-item').addClass('d-none');
-                        $('.card-item').slice(0, 40).removeClass('d-none');
+                        $('#pesanKosong').remove(); 
+                        $('#containerSkeleton').addClass('hidden');
+                        $('#containerBuku').removeClass('hidden');
+                        $('.card-item').addClass('hidden');
+                        $('.card-item').slice(0, 40).removeClass('hidden');
 
                         if (typeof table !== 'undefined') {
                             table.search('').draw();
@@ -856,8 +565,8 @@
                         }
 
                         $('#btnClearSearch').show();
-                        $('#containerBuku').addClass('d-none');
-                        $('#containerSkeleton').removeClass('d-none');
+                        $('#containerBuku').addClass('hidden');
+                        $('#containerSkeleton').removeClass('hidden');
 
                         clearTimeout(jedaKetik);
 
@@ -866,18 +575,29 @@
                             table.search(keyword).draw();
 
                             // Sembunyikan semua card buku terlebih dahulu
-                            $('.card-item').addClass('d-none');
+                            $('.card-item').addClass('hidden');
 
                             // Hitung berapa jumlah baris data yang cocok dengan filter
                             const jumlahDataDitemukan = table.rows({ filter: 'applied' }).count();
 
                             if (jumlahDataDitemukan === 0) {
-                                $('#containerSkeleton').addClass('d-none');
+                                $('#containerSkeleton').addClass('hidden');
 
                                 const templatePesanKosong = `
-                                <div id="pesanKosong" class="pencarian-kosong-box text-center">
-                                    <h5 class="fw-bold text-dark mb-2">Data Buku Tidak Tersedia</h5>
-                                    <p class="text-muted small m-0">Maaf, buku dengan kata kunci "<strong class="text-danger">${keyword}</strong>" tidak dapat ditemukan di dalam inventaris donasi kami.</p>
+                                <div id="pesanKosong" class="w-full max-w-lg mx-auto bg-white border border-amber-200 rounded-2xl shadow-md p-8 text-center my-12 animate-fade-in">
+                                    <div class="w-16 h-16 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-amber-100">
+                                        <i class="fa-solid fa-magnifying-glass-minus text-amber-500 text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-lg font-black text-slate-800 mb-2">Buku Tidak Ditemukan</h3>
+                                    <p class="text-sm text-slate-650 leading-relaxed">
+                                        Maaf, data donasi buku dengan kata kunci "<span class="font-bold text-amber-600">${keyword}</span>" tidak dapat ditemukan dalam basis data perpustakaan kami.
+                                    </p>
+                                    <div class="mt-6 flex flex-wrap gap-2 justify-center">
+                                        <span class="text-xs text-slate-500">Coba cari:</span>
+                                        <button onclick="document.getElementById('pencarianGramedia').value='Fiksi'; document.getElementById('pencarianGramedia').dispatchEvent(new Event('keyup'))" class="text-xs text-primary-600 font-bold bg-primary-50 hover:bg-primary-100 px-2.5 py-1 rounded transition-colors duration-150">Fiksi</button>
+                                        <button onclick="document.getElementById('pencarianGramedia').value='Teknologi'; document.getElementById('pencarianGramedia').dispatchEvent(new Event('keyup'))" class="text-xs text-primary-600 font-bold bg-primary-50 hover:bg-primary-100 px-2.5 py-1 rounded transition-colors duration-150">Teknologi</button>
+                                        <button onclick="document.getElementById('pencarianGramedia').value='Hamba Allah'; document.getElementById('pencarianGramedia').dispatchEvent(new Event('keyup'))" class="text-xs text-primary-600 font-bold bg-primary-50 hover:bg-primary-100 px-2.5 py-1 rounded transition-colors duration-150">Hamba Allah</button>
+                                    </div>
                                 </div>
                             `;
                                 $('#containerBuku').after(templatePesanKosong);
@@ -885,11 +605,11 @@
                             } else {
                                 // Jika data ada, tampilkan card yang sesuai
                                 table.rows({ filter: 'applied' }).indexes().each(function (idx) {
-                                    $(`#card-${idx}`).removeClass('d-none');
+                                    $(`#card-${idx}`).removeClass('hidden');
                                 });
 
-                                $('#containerSkeleton').addClass('d-none');
-                                $('#containerBuku').removeClass('d-none');
+                                $('#containerSkeleton').addClass('hidden');
+                                $('#containerBuku').removeClass('hidden');
                             }
                         }, 300);
                     });
@@ -899,10 +619,10 @@
                         resetKeAwal();
                     });
 
-                }) // Penutup rantai .then(data => { ... }) yang benar
+                }) 
                 .catch(error => {
                     console.error(error);
-                    $('#loadingState').html('<p class="text-danger small">Gagal memuat basis data perpustakaan.</p>');
+                    $('#loadingState').html('<p class="text-red-650 text-sm font-semibold py-8">Gagal memuat basis data perpustakaan.</p>');
                 });
         });
     </script>
