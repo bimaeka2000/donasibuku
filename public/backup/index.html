@@ -8,40 +8,43 @@
 
     <link rel="icon" type="image/png" href="/asset/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <style>
-        /* --- BASE RESET & FONT --- */
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             margin: 0;
-            -webkit-font-smoothing: antialiased;
         }
 
+        /* Batas tinggi minimal area pembungkus konten utama */
         .container.mb-5 {
             flex: 1;
-            min-height: auto;
+            min-height: 450px;
         }
 
-        /* --- HERO SECTION --- */
+        /* Kontainer Utama dengan Dua Gambar Aset Sekaligus (Kiri & Kanan) */
+
+        /* Kontainer Utama Hero dengan Animasi Slideshow Fade Otomatis */
+        /* Kontainer Utama Hero (Ukuran Asli Sesuai Kode Awal Anda) */
         .hero-wrapper-premium {
             position: relative;
-            min-height: 50vh;
+            min-height: 70vh;
+            /* <--- Dikembalikan ke ukuran 70vh asli bawaan Anda */
             display: flex;
             flex-direction: column;
-            background-color: #0f172a;
-            margin-bottom: 70px;
-            /* Space for absolute floating stats cards */
+            overflow: hidden;
+            /* Memastikan lapisan gambar slideshow tidak bocor keluar */
+            background-color: #000;
         }
 
+        /* Lapisan Khusus Jalur Slideshow 3 Gambar (Posisi Teratas 'center top') */
         .hero-wrapper-premium::before {
             content: "";
             position: absolute;
@@ -49,128 +52,206 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-position: center 30%;
+
+            /* Mengunci posisi gambar dari sisi yang paling atas */
+            background-position: center top;
             background-size: cover;
             background-repeat: no-repeat;
-            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)), url('/asset/book-4.jpg');
+
+            /* Lapisan gradasi gelap permanen agar teks di atasnya tetap tajam */
+            background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65));
+
+            /* Durasi total 15 detik untuk 3 gambar (berputar selamanya) */
+            animation: gantiGambar3Fade 15s infinite ease-in-out;
             z-index: 1;
-            /* Since the parent isn't overflow hidden anymore, we don't scale or leak this */
         }
 
+        /* Memastikan teks/konten hero Anda tetap berada di lapisan paling atas */
         .hero-wrapper-premium>* {
             position: relative;
             z-index: 2;
         }
 
-        /* --- NAVBAR --- */
+        /* LOGIKA ANIMASI FADE HALUS 3 GAMBAR */
+        @keyframes gantiGambar3Fade {
+
+            /* --- GAMBAR 1 (book-1) --- */
+            0%,
+            30% {
+                background-image:
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    url('/asset/book-4.jpg');
+            }
+
+            /* Transisi ke Gambar 2 */
+            33.33% {
+                background-image:
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    url('/asset/book-2.jpg');
+            }
+
+            /* --- GAMBAR 2 (book-2) --- */
+            36.66%,
+            63.33% {
+                background-image:
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    url('/asset/book-2.jpg');
+            }
+
+            /* Transisi ke Gambar 3 */
+            66.66% {
+                background-image:
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    url('/asset/book-3.jpg');
+            }
+
+            /* --- GAMBAR 3 (book-3) --- */
+            70%,
+            96.66% {
+                background-image:
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    url('/asset/book-3.jpg');
+            }
+
+            /* Kembali ke awal secara mulus */
+            100% {
+                background-image:
+                    linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.65)),
+                    url('/asset/book-4.jpg');
+            }
+        }
+
+        /* Navbar Utama (Posisi Awal) */
         .navbar-kampus {
             background: #ffffff !important;
             padding: 16px 0;
+            /* Sedikit dipertebal di awal agar efek transisi mengecilnya terasa */
             position: fixed !important;
+            /* Mengubah menjadi fixed agar bisa melayang */
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            border-bottom: 1px solid #f1f5f9;
-            transition: all 0.3s ease;
+            /* Memastikan navbar berada di lapisan paling atas */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease-in-out;
+            /* Animasi smooth untuk semua perubahan */
         }
 
+        /* Kelas Tambahan Saat Di-scroll (Akan dipicu oleh JavaScript) */
         .navbar-kampus.navbar-scrolled {
-            background: rgba(255, 255, 255, 0.95) !important;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 12px 0;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            border-bottom: transparent;
+            background: rgba(255, 255, 255, 0.85) !important;
+            /* Efek Putih Transparan Premium */
+            backdrop-filter: blur(30px);
+            /* Efek blur kaca (frosted glass) di belakang navbar */
+            -webkit-backdrop-filter: blur(30px);
+            /* Dukungan untuk Safari */
+            padding: 8px 0;
+            /* Efek animasi mengecil (shrink) yang elegan */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            /* Bayangan sedikit lebih tegas saat melayang */
         }
 
+        /* PENTING: Karena navbar diubah menjadi 'fixed', beri kompensasi ruang pada elemen berikutnya 
+   agar konten teratas tidak tertutup/tertimbun di bawah navbar */
         .hero-wrapper-premium {
-            padding-top: 100px;
+            padding-top: 80px;
+            /* Menyesuaikan dengan tinggi navbar */
         }
 
-        .hero-body-content {
-            padding-bottom: 100px;
-        }
-
+        /* Identitas Sistem Navigasi (Warna Gelap Kontras) */
         .judul-sistem {
-            font-size: 1rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: #1e293b !important;
             line-height: 1.2;
         }
 
         .sub-judul-sistem {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             color: #64748b !important;
-            font-weight: 500;
+            font-weight: 400;
         }
 
+        /* Menu Navigasi Sebelah Kanan (Warna Gelap) */
         .navbar-menu-kanan {
             list-style: none;
             padding: 0;
             margin: 0;
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 20px;
         }
 
         .navbar-menu-kanan li a {
             color: #475569 !important;
             text-decoration: none;
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 500;
             transition: color 0.2s;
         }
 
-        .navbar-menu-kanan li a:hover {
-            color: #2563eb !important;
-        }
-
+        .navbar-menu-kanan li a:hover,
         .navbar-menu-kanan li.active a {
-            color: #1e293b !important;
-            font-weight: 700;
+            color: #0f172a !important;
+            font-weight: 600;
         }
 
-        /* --- SEARCH BAR --- */
+        /* Area Konten Tengah Hero */
+        .hero-body-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-bottom: 80px;
+        }
+
+        .brand-kampus-besar {
+            max-width: 800px;
+        }
+
+        .brand-kampus-besar h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
+            margin: 0;
+            text-transform: uppercase;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Logo Brand */
+        .logo-placeholder {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-placeholder img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+        }
+
+        /* Bar Pencarian Mengambang */
         .search-section-floating {
             position: relative;
-            padding-top: 20px;
-            padding-bottom: 30px;
+            margin-top: -30px;
+            padding-bottom: 60px;
             z-index: 30;
-        }
-
-        .search-section-floating .container::before {
-            content: "KATALOG BUKU";
-            display: block;
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: 800;
-            color: #60a5fa;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .search-section-floating .row::before {
-            content: "Koleksi Data Buku \A Menampilkan koleksi buku";
-            white-space: pre-wrap;
-            display: block;
-            text-align: center;
-            width: 100%;
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #1e293b;
-            margin-bottom: 30px;
-            line-height: 1.4;
         }
 
         .search-container-premium {
             background: #ffffff;
             border-radius: 50px !important;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-            padding: 8px 24px;
-            border: 1px solid #f1f5f9;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 10px 24px;
         }
 
+        /* Wrapper Utama Input agar Tanda X Mengunci di Dalam Sisi Kanan */
         .search-wrapper {
             position: relative;
             display: flex;
@@ -178,264 +259,253 @@
             width: 100%;
         }
 
-        .search-wrapper::before {
-            content: "\f002";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: #94a3b8;
-            font-size: 1.1rem;
-            margin-right: 12px;
-        }
-
+        /* Input Pencarian Premium */
         .search-input-premium {
             border: none !important;
             outline: none !important;
-            font-size: 1rem;
+            font-size: 1.05rem;
             box-shadow: none !important;
             background: transparent !important;
             padding-right: 45px !important;
+            /* Ruang agar teks tidak menabrak tanda X */
             width: 100%;
-            color: #334155;
         }
 
-        .search-input-premium::placeholder {
-            color: #94a3b8;
-            font-weight: 400;
-        }
-
+        /* Tanda X Mengambang Sempurna di Sisi Kanan Dalam Input */
         .btn-clear-search {
             position: absolute !important;
-            right: 15px !important;
+            right: 20px !important;
             top: 50% !important;
             transform: translateY(-50%) !important;
             background: none !important;
             border: none !important;
-            font-size: 1.2rem !important;
+            font-size: 1.3rem !important;
             color: #94a3b8 !important;
             cursor: pointer;
             z-index: 10;
+            line-height: 1 !important;
             padding: 0 !important;
             display: none;
+            /* Dikontrol via JS */
+            transition: color 0.2s;
         }
 
         .btn-clear-search:hover {
             color: #475569 !important;
         }
 
-        /* --- BOOK GRID & CARDS --- */
+        /* 1. Grid Utama yang Presisi */
         .book-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            /* Lebar dioptimalkan */
+            gap: 24px;
         }
 
+        /* 2. Struktur Card Buku Modern */
         .book-card {
             background: #ffffff;
-            border: 1px solid #f1f5f9;
-            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            /* Melengkung lebih halus & modern */
             overflow: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            /* Efek animasi hover lebih sinematik */
             display: flex;
             flex-direction: column;
             height: 100%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 10px 15px rgba(0, 0, 0, 0.03);
-            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
         }
 
+        /* Efek Hover Mengambang Lembut */
         .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08), 0 20px 25px rgba(0, 0, 0, 0.05);
-            border-color: #e2e8f0;
+            transform: translateY(-5px);
+            /* Card sedikit terangkat ke atas saat di-hover */
+            box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+            border-color: #cbd5e1;
         }
 
-        .book-cover-wrapper {
-            height: 200px;
-            background: #f1f5f9;
+        /* 3. Area Sampul / Cover Placeholder */
+        .book-cover-placeholder {
+            height: 250px;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #f1f5f9;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            padding: 24px;
+            text-align: center;
             position: relative;
-            overflow: hidden;
-            padding: 12px;
-        }
-
-        .book-cover-img {
-            max-height: 100%;
-            max-width: 100%;
-            width: auto;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s ease;
-            display: block;
-        }
-
-        .book-card:hover .book-cover-img {
-            transform: scale(1.05);
         }
 
         .cover-inisial {
-            font-size: 3rem;
+            font-size: 1.6rem;
             font-weight: 800;
-            color: #94a3b8;
-            letter-spacing: 2px;
+            color: #334155;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- CARD INFO AREA --- */
+        /* 4. Area Informasi Konten (Flexbox diaktifkan agar tinggi merata) */
         .book-info {
-            padding: 20px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
-            background: #ffffff;
+            /* Memaksa area ini mengisi sisa ruang yang kosong */
         }
 
-        .book-info .d-flex.justify-content-between.align-items-center {
-            margin-bottom: 12px !important;
-        }
-
-        .book-category-tag {
-            font-size: 0.65rem;
-            color: #4f46e5;
-            background-color: #e0e7ff;
-            font-weight: 800;
+        /* Kategori & Ketersediaan di Baris Atas */
+        .book-category {
+            font-size: 0.75rem;
+            color: #2563eb;
+            /* Warna biru aksen premium */
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 4px 10px;
-            border-radius: 20px;
         }
 
-        .book-card:nth-child(3n+1) .book-category-tag {
-            color: #0284c7;
-            background-color: #e0f2fe;
-        }
-
-        .book-card:nth-child(3n+2) .book-category-tag {
-            color: #059669;
-            background-color: #d1fae5;
-        }
-
-        .book-card:nth-child(3n+3) .book-category-tag {
-            color: #db2777;
-            background-color: #fce7f3;
-        }
-
-        .book-info .text-muted.small {
-            font-size: 0.75rem !important;
-            color: #64748b !important;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .book-info .text-muted.small::before {
-            content: "\f02d";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            color: #94a3b8;
-        }
-
+        /* Judul Buku (Dikunci maksimal 2 baris agar tetap sejajar) */
         .book-title {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #1e293b;
-            line-height: 1.4;
-            margin-top: 4px;
-            margin-bottom: 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            /* Diturunkan dari 700 ke 600 agar tidak terlalu kaku dan terasa lebih halus */
+            color: #334155;
+            /* Diubah dari #0f172a ke warna charcoal yang lebih teduh di mata */
+            line-height: 1.45;
+            /* Jarak antar baris sedikit dilonggarkan agar teks terasa bernapas */
+            margin-top: 12px;
+            margin-bottom: 0;
             display: -webkit-box;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            height: 4.35em;
+            transition: color 0.2s ease;
+            /* Transisi halus jika ada interaksi */
         }
 
-        /* --- CARD FOOTER (Donatur & Rak) --- */
+        /* Pengarang & Penerbit */
+        .book-author {
+            font-size: 0.85rem;
+            color: #475569;
+            font-weight: 500;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .book-publisher {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-bottom: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* 5. Footer Metadata (Nama Donatur & Rak Otomatis Mengunci di Paling Bawah) */
         .book-metadata-footer {
             margin-top: auto;
-            border-top: 1px dashed #e2e8f0;
-            padding-top: 16px;
+            /* Tetap mengunci posisi di paling bawah card */
+            border-top: 1px solid #f1f5f9;
+            padding-top: 14px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            position: relative;
+            flex-direction: column;
+            gap: 8px;
         }
 
-        .book-metadata-footer::before {
-            content: "PENDONASI";
-            font-size: 0.65rem;
+        /* Label Kecil "DONATUR" di Atas Nama */
+        .donor-label {
+            font-size: 0.7rem;
             color: #94a3b8;
-            font-weight: 800;
-            letter-spacing: 1px;
-            width: 100%;
-            margin-bottom: 4px;
-        }
-
-        .donor-name-badge {
-            font-size: 0.85rem;
+            /* Diubah ke abu-abu yang lebih tenang */
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
             font-weight: 700;
-            color: #334155;
-            background: transparent;
-            padding: 0;
-            border: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            margin-bottom: -2px;
         }
 
-        .donor-name-badge strong {
-            display: none;
-        }
-
-        .donor-name-badge::before {
-            content: "\f007";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background-color: #e2e8f0;
-            color: #64748b;
-            border-radius: 50%;
-            font-size: 0.8rem;
-        }
-
-        .book-card:nth-child(even) .donor-name-badge::before {
-            background-color: #dbeafe;
-            color: #2563eb;
-        }
-
-        .book-card:nth-child(odd) .donor-name-badge::before {
-            background-color: #ffedd5;
-            color: #ea580c;
-        }
-
-        .location-badge {
-            font-size: 0.75rem;
-            color: #475569;
+        /* IMPROVISASI: Gaya Baru untuk Nama Donatur (Menggunakan Background Badge) */
+        .donor-name {
+            font-size: 0.85rem;
             font-weight: 600;
-            background: #f8fafc;
+            color: #1e3a8a;
+            /* Warna biru navy gelap agar teks terbaca tajam */
+            background-color: #eff6ff;
+            /* Background biru muda yang sangat lembut */
             padding: 6px 12px;
+            /* Memberikan ruang napas di dalam background */
             border-radius: 8px;
+            /* Melengkung serasi dengan card utama */
+            display: inline-block;
+            align-self: flex-start;
+            /* Lebar background otomatis mengikuti panjang nama, tidak meluber */
+            max-width: 100%;
+            /* Menjaga agar nama super panjang tidak merusak tata letak */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* Jika nama terlalu panjang, otomatis terpotong rapi dengan titik-titik (...) */
+            border: 1px solid #dbeafe;
+            /* Garis tepi tipis agar badge terlihat lebih berdimensi */
+        }
+
+        /* Badge Lokasi / Rak Buku (Disesuaikan agar serasi dengan Badge Donatur) */
+        .location-badge {
+            align-self: flex-start;
+            background-color: #f8fafc;
+            color: #64748b;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
             border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
         }
 
-        .location-badge i {
-            display: none;
+
+        /* Sembunyikan kontrol bawaan DataTables */
+        #tabelBuku_wrapper .dataTables_filter,
+        #tabelBuku_wrapper .dataTables_length,
+        #tabelBuku_wrapper .dataTables_info {
+            display: none !important;
         }
 
-        /* hide icon if any */
+        /* Footer Premium */
+        .footer-kampus-premium {
+            background-color: #2c3e50;
+            color: #ffffff !important;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
 
-        /* --- SKELETON LOADING --- */
+        .footer-kampus-premium h5 {
+            font-weight: 700;
+            color: #ffffff !important;
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+        }
+
+        .text-deskripsi-footer {
+            color: #ffffff !important;
+            line-height: 1.6;
+            text-align: justify;
+            font-size: 0.85rem;
+        }
+
+        .footer-kampus-premium span,
+        .footer-kampus-premium p,
+        .footer-kampus-premium div {
+            color: #ffffff !important;
+        }
+
+        /* Efek Animasi Skeleton Loading */
         .skeleton-card {
             background: #ffffff;
-            border: 1px solid #f1f5f9;
-            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
             overflow: hidden;
             height: 100%;
             display: flex;
@@ -443,14 +513,14 @@
         }
 
         .skeleton-img {
-            height: 220px;
+            height: 240px;
             background: #e2e8f0;
         }
 
         .skeleton-text {
-            background: #f1f5f9;
+            background: #e2e8f0;
             border-radius: 4px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .pulse {
@@ -471,132 +541,313 @@
             }
         }
 
-        /* --- LIST VIEW OVERRIDES --- */
+        @media (max-width: 768px) {
+
+            /* 1. Menyesuaikan Tinggi Hero agar Proporsional di HP */
+            .hero-wrapper-premium {
+                min-height: 60vh !important;
+                /* Sedikit dikurangi agar proporsi gambar di HP tetap estetik */
+            }
+
+            /* 2. Memperkecil Ukuran Judul Utama Kampus agar Tidak Kepotong/Patah */
+            .brand-kampus-besar h2 {
+                font-size: 1.85rem !important;
+                /* Diturunkan dari 3rem ke 1.85rem khusus di HP */
+                line-height: 1.3 !important;
+                /* Memberi jarak antar baris yang pas */
+                padding: 0 15px;
+                /* Memberi jarak aman di kiri-kanan layar HP */
+                letter-spacing: 0.5px !important;
+            }
+
+            /* 3. Menyesuaikan Spasi Area Konten Tengah */
+            .hero-body-content {
+                padding-top: 40px !important;
+                padding-bottom: 60px !important;
+                /* Memberi ruang napas untuk bar pencarian di bawahnya */
+            }
+
+            /* 4. Menyesuaikan Padding Bar Pencarian Mengambang di HP */
+            .search-container-premium {
+                padding: 8px 16px !important;
+                /* Sedikit lebih tipis agar muat di layar HP yang sempit */
+                margin: 0 10px;
+                /* Mencegah kotak search menempel ke pinggir layar HP */
+            }
+
+            .search-input-premium {
+                font-size: 0.95rem !important;
+                /* Ukuran teks pencarian disesuaikan */
+            }
+        }
+
+        /* --- CONTAINER UTAMA (ADAPTIF) --- */
+        #book-container.view-card {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 24px;
+        }
+
         #book-container.view-list {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
 
-        .view-list .book-card {
-            flex-direction: row;
-            align-items: stretch;
+        /* --- BASE CARD UTAMA --- */
+        .book-card {
             background: #ffffff;
+            border: 1px solid #e2e8f0;
             border-radius: 12px;
-            padding: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+            display: flex;
+            transition: all 0.3s ease;
         }
 
-        .view-list .book-cover-wrapper {
-            width: 120px;
-            height: auto;
-            min-height: 140px;
-            border-radius: 12px 0 0 12px;
+        /* ==========================================
+   A. GAYA SAAT MODE CARD (GRID) ACTIVE
+   ========================================== */
+        .view-card .book-card {
+            flex-direction: column;
+            height: 100%;
         }
 
-        .view-list .book-info {
-            padding: 16px 20px;
+        .view-card .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .view-card .book-cover-wrapper {
+            height: 250px;
+            padding: 16px;
+            background: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .view-card .book-cover-img {
+            max-height: 100%;
+            object-fit: contain;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .view-card .book-info {
+            padding: 16px;
             display: flex;
             flex-direction: column;
-            width: 100%;
+            flex-grow: 1;
         }
 
-        .view-list .book-title {
-            font-size: 1.1rem;
-            margin: 4px 0 12px 0;
+        .view-card .book-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #334155;
+            margin: 8px 0 12px 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 2.8em;
         }
 
-        .view-list .book-metadata-footer {
+        .view-card .book-metadata-footer {
             margin-top: auto;
+            border-top: 1px solid #f1f5f9;
             padding-top: 12px;
-            border-top: 1px dashed #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
         }
 
-        /* --- DATATABLES & HIDDEN --- */
-        #tabelBuku_wrapper .dataTables_filter,
-        #tabelBuku_wrapper .dataTables_length,
-        #tabelBuku_wrapper .dataTables_info {
-            display: none !important;
+        /* ==========================================================================
+   CSS FINAL: MODE LIST SUPER PADAT, SEJAJAR, & SEARAH (ANTI-JARAK KOSONG)
+   ========================================================================== */
+
+        /* Kontainer utama list menumpuk rapat ke bawah */
+        .view-list {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 8px !important;
         }
 
-        /* --- FOOTER --- */
-        .footer-kampus-premium {
-            background-color: #0f172a;
-            color: #cbd5e1 !important;
-            font-size: 0.9rem;
-            margin-top: auto;
+        /* Card List: Cover di kiri, teks langsung sejajar rata atas di kanannya */
+        .view-list .book-card {
+            display: flex !important;
+            flex-direction: row !important;
+            align-items: flex-start !important;
+            /* Memaksa teks sejajar dengan ujung atas cover */
+            justify-content: flex-start !important;
+            gap: 16px !important;
+            /* Jarak pas dari cover ke teks */
+            padding: 10px 14px !important;
+            /* Padding tipis agar card tidak longgar */
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 6px !important;
+            width: 100% !important;
+            box-shadow: none !important;
         }
 
-        .footer-kampus-premium h5 {
+        /* Ukuran Kotak Cover Buku */
+        .view-list .book-cover-wrapper {
+            width: 55px !important;
+            height: 75px !important;
+            min-width: 55px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: transparent !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        .view-list .book-cover-img {
+            max-height: 100% !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
+        }
+
+        /* Kontainer Teks Utama: Mengalir runtut ke bawah tanpa flexbox pengganggu */
+        .view-list .book-info {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            gap: 2px !important;
+            /* Mengunci jarak antar teks sedekat mungkin */
+            width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        /* Mereset paksa struktur pembungkus bawaan HTML */
+        .view-list .book-info>.d-flex.justify-content-between {
+            display: flex !important;
+            flex-direction: column !important;
+            /* Memaksa elemen di dalamnya berbaris ke bawah */
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            gap: 2px !important;
+            width: 100% !important;
+        }
+
+        /* 1. Judul Buku (Dipaksa berada di urutan pertama paling atas) */
+        .view-list .book-title {
+            font-size: 1.05rem !important;
+            font-weight: 600 !important;
+            color: #1e293b !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1.2 !important;
+            order: 1 !important;
+        }
+
+        /* 2. Kategori Buku (Tepat di bawah judul) */
+        .view-list .book-category-tag {
+            font-size: 0.7rem !important;
+            padding: 2px 6px !important;
+            margin: 2px 0 0 0 !important;
+            display: inline-block !important;
+            line-height: 1 !important;
+            order: 2 !important;
+        }
+
+        /* 3. Teks Ketersediaan */
+        .view-list .text-muted.small {
+            font-size: 0.75rem !important;
+            color: #64748b !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            line-height: 1.2 !important;
+            display: block !important;
+            order: 3 !important;
+        }
+
+        /* Pembungkus Donatur & Rak (Mengikuti urutan ke bawah di sisi kiri) */
+        .view-list .book-metadata-footer {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            gap: 2px !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border-top: none !important;
+            width: 100% !important;
+            order: 4 !important;
+            /* Menaruh blok donatur & rak di paling bawah */
+        }
+
+        /* 4 & 5. Format teks Donatur dan Lokasi Rak */
+        .view-list .donor-name-badge,
+        .view-list .location-badge {
+            margin: 0 !important;
+            padding: 0 !important;
+            font-size: 0.75rem !important;
+            color: #475569 !important;
+            background: transparent !important;
+            /* Menghilangkan background pill agar hemat space */
+            border: none !important;
+            text-align: left !important;
+            line-height: 1.2 !important;
+            display: block !important;
+        }
+
+        /* Otomatis memberikan ketebalan teks label */
+        .view-list .donor-name-badge::before {
+            content: "Donatur: " !important;
+            font-weight: 500 !important;
+        }
+
+        /* Komponen Badge Universal */
+        .book-category-tag {
+            font-size: 0.7rem;
+            color: #94a3b8;
             font-weight: 700;
-            color: #ffffff !important;
-            margin-bottom: 20px;
-            font-size: 1.15rem;
+            text-transform: uppercase;
         }
 
-        .footer-kampus-premium p,
-        .footer-kampus-premium span {
-            color: #cbd5e1 !important;
+        .donor-label {
+            font-size: 0.65rem;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-weight: 700;
         }
 
-        /* --- MODAL DETAIL BUKU --- */
-        #detailBukuModal .modal-content {
-            border-radius: 20px;
-            border: none;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        .donor-name-badge {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1e40af;
+            background-color: #eff6ff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #dbeafe;
+        }
+
+        .location-badge {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Gaya Khusus untuk Tabel Detail */
+        .detail-table td {
+            padding: 6px 0;
+            font-size: 0.88rem;
         }
 
         .detail-cover-box {
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9) !important;
-            border-radius: 16px !important;
-            padding: 24px !important;
-            border: none !important;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 280px;
         }
 
-        .detail-cover-box img {
-            max-height: 300px !important;
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 768px) {
-            .hero-wrapper-premium {
-                margin-bottom: 250px;
-            }
-
-            /* More space for stacked cards */
-            .brand-kampus-besar h2 {
-                font-size: 1.8rem;
-            }
-
-            .brand-kampus-besar::before {
-                font-size: 0.75rem;
-            }
-
-            .brand-kampus-besar::after {
-                font-size: 0.9rem;
-                padding: 0 15px;
-            }
-
-            .search-container-premium {
-                padding: 8px 16px;
-                margin: 0 10px;
-            }
-
-            .book-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            }
-
-            .view-list .book-card {
-                flex-direction: column;
-            }
-
-            .view-list .book-cover-wrapper {
-                width: 100%;
-                height: 180px;
-                border-radius: 12px 12px 0 0;
-            }
+        /* Membuat card bisa diklik (Pointer) */
+        .book-card {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -612,87 +863,25 @@
                     <img src="/asset/logo.png" alt="Logo ST Bhinneka" height="42" style="object-fit: contain;">
                     <div>
                         <div class="judul-sistem">Donatur Buku Perpustakaan ST Bhinneka</div>
-                        <div class="sub-judul-sistem">Sistem Informasi Data Donatur Buku</div>
+                        <div class="sub-judul-sistem">Data Donatur Buku Perpustakaan</div>
                     </div>
                 </div>
 
                 <ul class="navbar-menu-kanan d-none d-lg-flex">
-                    <li class="active"><a href="index.html">Katalog Buku</a></li>
-                    <li><a href="https://lib.satyaterrabhinneka.ac.id/"
-                            class="btn btn-primary btn-sm px-3 py-2 rounded-pill fw-bold"
-                            style="background-color:#eff6ff; color:#1e40af; border:none;"><i
-                                class="fas fa-sign-in-alt me-1"></i>E-Library</a></li>
+                    <li class="active"><a href="#">Beranda</a></li>
+                    <li><a href="https://lib.satyaterrabhinneka.ac.id/">E-Library</a></li>
                 </ul>
 
             </div>
         </nav>
 
-        <div class="hero-body-content position-relative">
-            <div class="container text-center text-white" style="max-width: 800px; z-index: 2;">
-                <img src="/asset/logo.png" alt="Logo Besar" height="70" class="mb-3"
+        <div class="hero-body-content">
+            <div class="container brand-kampus-besar">
+                <img src="/asset/logo.png" alt="Logo Besar" height="90" class="mb-3"
                     style="filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5));">
-
-                <p class="mb-2 fw-bold" style="color: #60a5fa; letter-spacing: 2px; font-size: 0.85rem;">SISTEM
-                    PENCARIAN DATA DONATUR BUKU</p>
-
-                <p style="font-size: 0.95rem; color: #e2e8f0; line-height: 1.6; max-width: 650px; margin: 0 auto;">
-                    Program donasi buku ini dirancang untuk menghimpun kontribusi literasi dari segenap civitas
-                    akademika dan masyarakat luas. Di sini, Anda dapat memantau secara terbuka data donatur, daftar
-                    judul buku yang disumbangkan, serta posisi rak penempatannya di perpustakaan Universitas Satya Terra
-                    Bhinneka.
-                </p>
-            </div>
-
-            <!-- Floating Stats Cards -->
-            <div class="container position-absolute"
-                style="bottom: -50px; left: 50%; transform: translateX(-50%); z-index: 10; width: 100%;">
-                <div class="row justify-content-center g-3 px-3">
-                    <div class="col-6 col-md-3">
-                        <div class="card border-0 shadow-sm rounded-4 h-100 py-3 text-center"
-                            style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
-                            <div class="mb-2"><i class="fas fa-book text-primary fs-4"></i></div>
-                            <h3 class="fw-bolder text-dark mb-0">30</h3>
-                            <p class="text-muted small text-uppercase fw-bold mb-0 mt-1"
-                                style="font-size:0.65rem; letter-spacing:0.5px;">Buku Terkumpul</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="card border-0 shadow-sm rounded-4 h-100 py-3 text-center"
-                            style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
-                            <div class="mb-2"><i class="fas fa-hand-holding-heart text-danger fs-4"></i></div>
-                            <h3 class="fw-bolder text-dark mb-0">6</h3>
-                            <p class="text-muted small text-uppercase fw-bold mb-0 mt-1"
-                                style="font-size:0.65rem; letter-spacing:0.5px;">Donatur Berpartisipasi</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="card border-0 shadow-sm rounded-4 h-100 py-3 text-center"
-                            style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
-                            <div class="mb-2"><i class="fas fa-tags text-warning fs-4"></i></div>
-                            <h3 class="fw-bolder text-dark mb-0">5</h3>
-                            <p class="text-muted small text-uppercase fw-bold mb-0 mt-1"
-                                style="font-size:0.65rem; letter-spacing:0.5px;">Kategori Buku</p>
-                        </div>
-                    </div>
-                    <div class="col-6 col-md-3">
-                        <div class="card border-0 shadow-sm rounded-4 h-100 py-3 text-center"
-                            style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
-                            <div class="mb-2"><i class="fas fa-building text-success fs-4"></i></div>
-                            <h5 class="fw-bolder text-dark mb-0 mt-1">Perpustakaan Satya Terra Bhinneka</h5>
-                            <p class="text-muted small text-uppercase fw-bold mb-0 mt-1"
-                                style="font-size:0.65rem; letter-spacing:0.5px;">Lantai 2 Gedung Bhinneka</p>
-                        </div>
-                    </div>
-                </div>
+                <h2>UNIVERSITAS<br>SATYA TERRA BHINNEKA</h2>
             </div>
         </div>
-    </div>
-
-
-    </div>
-    </nav>
-
-
 
     </div>
 
@@ -818,107 +1007,39 @@
     </div>
 
     <!-- Footer Resmi Universitas Satya Terra Bhinneka (Bersih, Putih, Tanpa Tombol SLiMS) -->
-    <footer class="footer-kampus-premium pt-5 pb-4 mt-2">
+    <footer class="footer-kampus-premium pt-5 pb-4 mt-5">
         <div class="container">
             <div class="row g-4">
+
                 <!-- Kolom 1: Identitas Resmi -->
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="d-flex align-items-center gap-2 mb-3">
                         <img src="/asset/logo.png" alt="Logo" height="40" style="object-fit: contain;">
-                        <div>
-                            <div class="fw-bold text-white" style="font-size: 0.95rem;">Donatur Buku Perpustakaan</div>
-                            <div class="fw-bold text-white" style="font-size: 0.95rem;">ST Bhinneka</div>
-                        </div>
+                        <span class="fw-bold small">Donasi Buku Perpustakaan ST Bhinneka</span>
                     </div>
-                    <p class="small text-deskripsi-footer" style="color: #cbd5e1 !important; line-height: 1.6;">
-                        Sistem Informasi data donatur buku online Perpustakaan Universitas Satya Terra Bhinneka.
+                    <p class="small" style="font-size: 0.8rem; line-height: 1.4;">
+                        Sistem Data Donatur Buku Universitas Satya Terra Bhinneka.
                     </p>
                 </div>
 
-                <!-- Kolom 2: Tentang Program -->
-                <div class="col-md-4">
-                    <h6 class="text-uppercase fw-bold text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px;">
-                        Tentang Program</h6>
-                    <p class="small text-deskripsi-footer" style="color: #cbd5e1 !important; line-height: 1.6;">
-                        Program Donasi Buku merupakan wujud kepedulian bersama dalam meningkatkan kualitas pendidikan.
-                        Setiap buku yang disumbangkan disortir, didata ke sistem ini, dan ditempatkan di rak-rak
-                        perpustakaan agar mudah ditemukan dan dibaca oleh mahasiswa yang memerlukan referensi tambahan.
+                <!-- Kolom 2: Tentang Kami -->
+                <div class="col-md-6">
+                    <h5>Tentang Kami</h5>
+                    <p class="small">
+                        Perpustakaan Universitas Satya Terra Bhinneka merupakan unit penunjang utama kegiatan
+                        akademik,
+                        penelitian, dan pengabdian masyarakat di Provinsi Sumatera Utara. Kami berkomitmen untuk
+                        menyediakan akses tak terbatas terhadap sumber informasi global serta layanan literasi yang
+                        tepat waktu, tepat guna, dan berkelanjutan demi mendukung ekosistem pendidikan yang unggul.
                     </p>
                 </div>
 
-                <!-- Kolom 3: Opening Hours -->
-                <div class="col-md-4">
-                    <h6 class="text-uppercase fw-bold text-white mb-3" style="font-size: 0.85rem; letter-spacing: 1px;">
-                        <i class="far fa-clock me-2 text-primary"></i>Opening Hours
-                    </h6>
 
-                    <!-- Senin - Jumat -->
-                    <p class="fw-semibold mb-1" style="color: #e2e8f0; font-size: 0.8rem;">Monday - Friday</p>
-                    <ul class="list-unstyled mb-3" style="color: #94a3b8; font-size: 0.8rem; padding-left: 4px;">
-                        <li class="d-flex justify-content-between mb-1">
-                            <span><i class="fas fa-door-open me-2"
-                                    style="color:#22c55e; font-size:0.7rem;"></i>Open</span>
-                            <span class="fw-medium" style="color:#cbd5e1;">09.00 AM</span>
-                        </li>
-                        <li class="d-flex justify-content-between mb-1">
-                            <span><i class="fas fa-coffee me-2"
-                                    style="color:#f59e0b; font-size:0.7rem;"></i>Break</span>
-                            <span class="fw-medium" style="color:#cbd5e1;">12.00 – 13.00 PM</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <span><i class="fas fa-door-closed me-2"
-                                    style="color:#ef4444; font-size:0.7rem;"></i>Close</span>
-                            <span class="fw-medium" style="color:#cbd5e1;">20.00 PM</span>
-                        </li>
-                    </ul>
-
-                    <!-- Sabtu -->
-                    <p class="fw-semibold mb-1" style="color: #e2e8f0; font-size: 0.8rem;">Saturday</p>
-                    <ul class="list-unstyled mb-3" style="color: #94a3b8; font-size: 0.8rem; padding-left: 4px;">
-                        <li class="d-flex justify-content-between mb-1">
-                            <span><i class="fas fa-door-open me-2"
-                                    style="color:#22c55e; font-size:0.7rem;"></i>Open</span>
-                            <span class="fw-medium" style="color:#cbd5e1;">08.00 AM</span>
-                        </li>
-                        <li class="d-flex justify-content-between mb-1">
-                            <span><i class="fas fa-coffee me-2"
-                                    style="color:#f59e0b; font-size:0.7rem;"></i>Break</span>
-                            <span class="fw-medium" style="color:#cbd5e1;">12.00 – 13.00 PM</span>
-                        </li>
-                        <li class="d-flex justify-content-between">
-                            <span><i class="fas fa-door-closed me-2"
-                                    style="color:#ef4444; font-size:0.7rem;"></i>Close</span>
-                            <span class="fw-medium" style="color:#cbd5e1;">17.00 PM</span>
-                        </li>
-                    </ul>
-
-                    <!-- Lokasi & Email -->
-                    <ul class="list-unstyled small mb-0" style="color: #94a3b8;">
-                        <li class="mb-1 d-flex align-items-start gap-2">
-                            <i class="fas fa-map-marker-alt mt-1 text-danger" style="font-size:0.7rem;"></i>
-                            <span style="font-size:0.8rem;">Gedung Bhinneka Lt. 2</span>
-                        </li>
-                        <li class="d-flex align-items-start gap-2">
-                            <i class="far fa-envelope mt-1 text-info" style="font-size:0.7rem;"></i>
-                            <span style="font-size:0.8rem;">perpustakaan@stbhinneka.ac.id</span>
-                        </li>
-                    </ul>
-                </div>
             </div>
 
             <!-- Copyright -->
-            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-5 pt-3 border-top"
-                style="border-color: rgba(255,255,255,0.1) !important;">
-                <p class="small m-0" style="color: #94a3b8 !important;">&copy; 2026 Universitas Satya Terra Bhinneka.
-                    Hak Cipta Dilindungi.</p>
-                <div class="d-flex gap-3 mt-3 mt-md-0">
-                    <a href="#" class="text-secondary hover-white" style="color: #94a3b8 !important;"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-secondary hover-white" style="color: #94a3b8 !important;"><i
-                            class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-secondary hover-white" style="color: #94a3b8 !important;"><i
-                            class="fab fa-youtube"></i></a>
-                </div>
+            <div class="text-center mt-5 pt-3 border-top border-secondary">
+                <p class="small m-0">&copy; 2026 Universitas Satya Terra Bhinneka. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
