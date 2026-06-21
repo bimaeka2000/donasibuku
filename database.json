@@ -1,0 +1,85 @@
+[
+  {
+    "id": "BK-1782026732672-0",
+    "judul": "Laskar Pelangi",
+    "kategori": "Fiksi",
+    "nama_donatur": "Budi Santoso",
+    "jumlah_buku": 5,
+    "rak": "Rak A - Baris 1",
+    "pengarang": "Andrea Hirata",
+    "penerbit": "Bentang Pustaka",
+    "imported_at": "2026-06-21T07:25:32.672Z"
+  },
+  {
+    "id": "BK-1782026732673-1",
+    "judul": "Pengantar AI",
+    "kategori": "Teknologi",
+    "nama_donatur": "Andi Wijaya",
+    "jumlah_buku": 2,
+    "rak": "Rak B - Baris 3",
+    "pengarang": "Dr. Mujiono",
+    "penerbit": "TechPress",
+    "imported_at": "2026-06-21T07:25:32.673Z"
+  },
+  {
+    "id": "BK-1782026732673-2",
+    "judul": "Sejarah Dunia",
+    "kategori": "Sejarah",
+    "nama_donatur": "Hamba Allah",
+    "jumlah_buku": 3,
+    "rak": "Ruang Baca Utama",
+    "pengarang": "Dr. Mujiono",
+    "penerbit": "TechPress",
+    "imported_at": "2026-06-21T07:25:32.673Z"
+  },
+  {
+    "id": "BK-1782027876467-3-207",
+    "judul": "Mariposa",
+    "kategori": "Fiksi",
+    "nama_donatur": "Siti Rahma",
+    "jumlah_buku": 3,
+    "rak": "Rak A-2",
+    "pengarang": "Luluk HF",
+    "penerbit": "Coconut Books"
+  },
+  {
+    "id": "BK-1782027876467-4-242",
+    "judul": "Dasar-Dasar Akuntansi",
+    "kategori": "Edukasi",
+    "nama_donatur": "Ahmad Fauzi",
+    "jumlah_buku": 10,
+    "rak": "Rak C-1",
+    "pengarang": "Prof. Subroto",
+    "penerbit": "Erlangga"
+  },
+  {
+    "id": "BK-1782027876468-5-325",
+    "judul": "Filosofi Teras",
+    "kategori": "Pengembangan Diri",
+    "nama_donatur": "Dian Pratama",
+    "jumlah_buku": 1,
+    "rak": "Rak D-2",
+    "pengarang": "Henry Manampiring",
+    "penerbit": "Kompas"
+  },
+  {
+    "id": "BK-1782027876468-6-465",
+    "judul": "Laut Bercerita",
+    "kategori": "Fiksi",
+    "nama_donatur": "Budi Santoso",
+    "jumlah_buku": 2,
+    "rak": "Rak A-1",
+    "pengarang": "Leila S. Chudori",
+    "penerbit": "KPG"
+  },
+  {
+    "id": "BK-1782027876468-7-253",
+    "judul": "Jaringan Komputer Modern",
+    "kategori": "Teknologi",
+    "nama_donatur": "Andi Wijaya",
+    "jumlah_buku": 4,
+    "rak": "Rak B-3",
+    "pengarang": "Iwan Sofyan",
+    "penerbit": "TechPress"
+  }
+]
