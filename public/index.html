@@ -8,15 +8,34 @@
 
     <link rel="icon" type="image/png" href="/asset/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css" rel="stylesheet">
 
     <style>
         /* --- BASE RESET & FONT --- */
+        html {
+            font-size: 15px;
+        }
+
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        a,
+        span:not(.fa):not(.fas):not(.far):not(.fab),
+        input,
+        button,
+        textarea,
+        select {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
             background-color: #f8fafc;
             color: #1e293b;
             display: flex;
@@ -34,7 +53,7 @@
         /* --- HERO SECTION --- */
         .hero-wrapper-premium {
             position: relative;
-            min-height: 50vh;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             background-color: #0f172a;
@@ -151,14 +170,14 @@
         }
 
         .judul-sistem {
-            font-size: 1rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: #1e293b !important;
             line-height: 1.2;
         }
 
         .sub-judul-sistem {
-            font-size: 0.75rem;
+            font-size: 0.85rem;
             color: #64748b !important;
             font-weight: 500;
         }
@@ -175,7 +194,7 @@
         .navbar-menu-kanan li a {
             color: #475569 !important;
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: 600;
             transition: color 0.2s;
         }
@@ -296,7 +315,7 @@
         }
 
         .search-section-floating .container::before {
-            content: "KATALOG BUKU";
+            content: "PENCARIAN DONATUR DAN JUDUL BUKU";
             display: block;
             text-align: center;
             font-size: 0.75rem;
@@ -307,7 +326,6 @@
         }
 
         .search-section-floating .row::before {
-            content: "Koleksi Data Buku \A Menampilkan koleksi buku";
             white-space: pre-wrap;
             display: block;
             text-align: center;
@@ -381,207 +399,449 @@
         /* --- BOOK GRID & CARDS --- */
         .book-grid {
             display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
         }
 
         .book-card {
             background: #ffffff;
-            border: 1px solid #f1f5f9;
-            border-radius: 16px;
+            border: none;
+            border-radius: 18px;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             height: 100%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02), 0 10px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
             cursor: pointer;
+            max-width: 100%;
+            width: 100%;
+            margin: 0;
         }
 
         .book-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.08), 0 20px 25px rgba(0, 0, 0, 0.05);
-            border-color: #e2e8f0;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.13);
         }
 
+        /* --- COVER WRAPPER (Gradient Header) --- */
         .book-cover-wrapper {
-            height: 200px;
-            background: #f1f5f9;
+            min-height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
             position: relative;
-            overflow: hidden;
-            padding: 12px;
+            /* Removed overflow: hidden to allow the 3D book cover to overlap the white section elegantly */
+            padding: 18px 20px;
+            border-radius: 18px 18px 0 0;
+            z-index: 2;
         }
 
-        .book-cover-img {
-            max-height: 100%;
-            max-width: 100%;
-            width: auto;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.5s ease;
-            display: block;
+        /* Color variations per card (Expanded to 8 for randomness) */
+        .book-card:nth-child(8n+1) .book-cover-wrapper {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
-        .book-card:hover .book-cover-img {
-            transform: scale(1.05);
+        .book-card:nth-child(8n+2) .book-cover-wrapper {
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
         }
 
-        .cover-inisial {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #94a3b8;
-            letter-spacing: 2px;
+        .book-card:nth-child(8n+3) .book-cover-wrapper {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        .book-card:nth-child(8n+4) .book-cover-wrapper {
+            background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+        }
+
+        .book-card:nth-child(8n+5) .book-cover-wrapper {
+            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+        }
+
+        .book-card:nth-child(8n+6) .book-cover-wrapper {
+            background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+        }
+
+        .book-card:nth-child(8n+7) .book-cover-wrapper {
+            background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+        }
+
+        .book-card:nth-child(8n+8) .book-cover-wrapper {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+        }
+
+        /* --- COVER HEADER TOP (Kategori + Copy btn) --- */
+        .cover-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .cover-kategori-badge {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 5px 14px;
+            border-radius: 50px;
+            letter-spacing: 0.5px;
             text-transform: uppercase;
+            backdrop-filter: blur(4px);
         }
 
-        /* --- CARD INFO AREA --- */
+        .cover-copy-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .cover-copy-btn:hover {
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* --- COVER BODY TEXT (Author + Title + Image) --- */
+        .cover-body-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            gap: 16px;
+        }
+
+        .cover-body-text {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cover-author {
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .cover-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+
+        .cover-mini-img {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            box-shadow: -8px 12px 25px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            flex-shrink: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: perspective(800px) rotateY(-18deg) translateY(12px);
+            z-index: 5;
+        }
+
+        .book-card:hover .cover-mini-img {
+            transform: perspective(800px) rotateY(0deg) scale(1.1) translateY(4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* --- COVER FOOTER ROW (Publisher + Initials) --- */
+        .cover-footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-top: 8px;
+        }
+
+        .cover-publisher {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            max-width: 65%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cover-inisial-badge {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* --- CARD INFO AREA (White Section) --- */
         .book-info {
-            padding: 20px;
+            padding: 16px 18px 18px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
             background: #ffffff;
+            text-align: left;
         }
 
-        .book-info .d-flex.justify-content-between.align-items-center {
-            margin-bottom: 12px !important;
+        .book-info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
         }
 
-        .book-category-tag {
+        .book-kategori-pill {
             font-size: 0.65rem;
-            color: #4f46e5;
-            background-color: #e0e7ff;
-            font-weight: 800;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            padding: 4px 10px;
-            border-radius: 20px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: #eff6ff;
+            color: #2563eb;
         }
 
-        .book-card:nth-child(3n+1) .book-category-tag {
+        /* Category color variations (8 vars) */
+        .book-card:nth-child(8n+1) .book-kategori-pill {
+            background: #eff6ff;
+            color: #2563eb;
+        }
+
+        .book-card:nth-child(8n+2) .book-kategori-pill {
+            background: #e0f2fe;
             color: #0284c7;
-            background-color: #e0f2fe;
         }
 
-        .book-card:nth-child(3n+2) .book-category-tag {
+        .book-card:nth-child(8n+3) .book-kategori-pill {
+            background: #d1fae5;
             color: #059669;
-            background-color: #d1fae5;
         }
 
-        .book-card:nth-child(3n+3) .book-category-tag {
+        .book-card:nth-child(8n+4) .book-kategori-pill {
+            background: #fff7ed;
+            color: #ea580c;
+        }
+
+        .book-card:nth-child(8n+5) .book-kategori-pill {
+            background: #ffe4e6;
+            color: #e11d48;
+        }
+
+        .book-card:nth-child(8n+6) .book-kategori-pill {
+            background: #f3e8ff;
+            color: #9333ea;
+        }
+
+        .book-card:nth-child(8n+7) .book-kategori-pill {
+            background: #fce7f3;
             color: #db2777;
-            background-color: #fce7f3;
         }
 
-        .book-info .text-muted.small {
-            font-size: 0.75rem !important;
-            color: #64748b !important;
-            font-weight: 600;
+        .book-card:nth-child(8n+8) .book-kategori-pill {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .book-count {
+            font-size: 0.75rem;
+            color: #64748b;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
         }
 
-        .book-info .text-muted.small::before {
-            content: "\f02d";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
+        .book-count i {
+            font-size: 0.7rem;
             color: #94a3b8;
         }
 
         .book-title {
-            font-size: 1.15rem;
-            font-weight: 800;
+            font-size: 1.05rem;
+            font-weight: 700;
             color: #1e293b;
-            line-height: 1.4;
-            margin-top: 4px;
-            margin-bottom: 20px;
+            line-height: 1.35;
+            margin-bottom: 12px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
-        /* --- CARD FOOTER (Donatur & Rak) --- */
-        .book-metadata-footer {
-            margin-top: auto;
-            border-top: 1px dashed #e2e8f0;
-            padding-top: 16px;
+        /* --- BOOK DETAIL ROWS (Penulis, Penerbit, Rak) --- */
+        .book-detail-rows {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            position: relative;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 14px;
         }
 
-        .book-metadata-footer::before {
-            content: "PENDONASI";
-            font-size: 0.65rem;
+        .book-detail-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .detail-label {
             color: #94a3b8;
-            font-weight: 800;
-            letter-spacing: 1px;
-            width: 100%;
-            margin-bottom: 4px;
+            font-weight: 500;
+            min-width: 60px;
+            flex-shrink: 0;
+            font-size: 0.78rem;
         }
 
-        .donor-name-badge {
-            font-size: 0.85rem;
-            font-weight: 700;
+        .detail-value {
             color: #334155;
-            background: transparent;
-            padding: 0;
-            border: none;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.82rem;
+        }
+
+        .rak-badge {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 2px 10px;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+            letter-spacing: 0.3px;
+        }
+
+        /* --- DONATUR SECTION --- */
+        .book-donatur-section {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+            margin-top: auto;
+        }
+
+        .donatur-label {
+            font-size: 0.62rem;
+            font-weight: 800;
+            color: #94a3b8;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .donatur-info {
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .donor-name-badge strong {
-            display: none;
-        }
-
-        .donor-name-badge::before {
-            content: "\f007";
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
+        .donatur-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
-            background-color: #e2e8f0;
-            color: #64748b;
-            border-radius: 50%;
             font-size: 0.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            flex-shrink: 0;
         }
 
-        .book-card:nth-child(even) .donor-name-badge::before {
-            background-color: #dbeafe;
-            color: #2563eb;
+        /* Avatar color variations (8 vars) */
+        .book-card:nth-child(8n+1) .donatur-avatar {
+            background: linear-gradient(135deg, #667eea, #764ba2);
         }
 
-        .book-card:nth-child(odd) .donor-name-badge::before {
-            background-color: #ffedd5;
-            color: #ea580c;
+        .book-card:nth-child(8n+2) .donatur-avatar {
+            background: linear-gradient(135deg, #2193b0, #6dd5ed);
         }
 
-        .location-badge {
-            font-size: 0.75rem;
-            color: #475569;
+        .book-card:nth-child(8n+3) .donatur-avatar {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .book-card:nth-child(8n+4) .donatur-avatar {
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+        }
+
+        .book-card:nth-child(8n+5) .donatur-avatar {
+            background: linear-gradient(135deg, #ee0979, #ff6a00);
+        }
+
+        .book-card:nth-child(8n+6) .donatur-avatar {
+            background: linear-gradient(135deg, #00c6ff, #0072ff);
+        }
+
+        .book-card:nth-child(8n+7) .donatur-avatar {
+            background: linear-gradient(135deg, #8e2de2, #4a00e0);
+        }
+
+        .book-card:nth-child(8n+8) .donatur-avatar {
+            background: linear-gradient(135deg, #fc4a1a, #f7b733);
+        }
+
+        .donatur-name {
+            font-size: 0.85rem;
             font-weight: 600;
-            background: #f8fafc;
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            display: flex;
-            align-items: center;
+            color: #334155;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .location-badge i {
+        /* --- HIDE OLD ELEMENTS (backward compat) --- */
+        .book-info .d-flex.justify-content-between.align-items-center {
+            display: none !important;
+        }
+
+        .book-category-tag {
+            display: none;
+        }
+
+        .book-info .text-muted.small {
+            display: none !important;
+        }
+
+        .book-metadata-footer {
+            display: none;
+        }
+
+        .book-card-meta {
+            display: none;
+        }
+
+        .book-cover-img {
+            display: none;
+        }
+
+        .cover-inisial {
             display: none;
         }
 
@@ -640,32 +900,105 @@
             background: #ffffff;
             border-radius: 12px;
             padding: 0;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+            max-width: 100%;
+            margin: 0;
+            overflow: hidden;
         }
 
+        /* Di mode list, bagian cover kita jadikan thumbnail kotak di sisi kiri */
         .view-list .book-cover-wrapper {
             width: 120px;
-            height: auto;
-            min-height: 140px;
-            border-radius: 12px 0 0 12px;
+            min-height: 100% !important;
+            border-radius: 12px 0 0 12px !important;
+            padding: 0;
+            display: block;
+        }
+
+        /* Sembunyikan sisa elemen cover yang lama (sudah dihapus di HTML) */
+        .view-list .cover-body-text,
+        .view-list .cover-footer-row,
+        .view-list .cover-copy-btn,
+        .view-list .cover-kategori-badge {
+            display: none !important;
+        }
+
+        .view-list .cover-body-container {
+            justify-content: center;
+            width: 100%;
+            padding: 0;
+        }
+
+        .view-list .cover-mini-img {
+            width: 90px;
+            height: 125px;
+            transform: none !important;
+            margin: auto;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
         .view-list .book-info {
-            padding: 16px 20px;
+            padding: 12px 16px;
             display: flex;
             flex-direction: column;
-            width: 100%;
+            width: calc(100% - 120px);
+            justify-content: center;
         }
 
         .view-list .book-title {
             font-size: 1.1rem;
-            margin: 4px 0 12px 0;
+            margin: 4px 0 8px 0;
+            -webkit-line-clamp: 1;
+            /* Satu baris saja di mode list */
         }
 
-        .view-list .book-metadata-footer {
-            margin-top: auto;
-            padding-top: 12px;
+        /* Jadikan detail info menyamping (horizontal) di mode list */
+        .view-list .book-detail-rows {
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .view-list .book-detail-row {
+            gap: 6px;
+        }
+
+        .view-list .book-donatur-section {
             border-top: 1px dashed #e2e8f0;
+            padding-top: 8px;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .view-list .donatur-label {
+            margin-bottom: 0;
+        }
+
+        @media (max-width: 768px) {
+
+            /* Fix untuk mode list di HP agar tidak terlalu sempit */
+            .view-list .book-card {
+                flex-direction: column;
+            }
+
+            .view-list .book-cover-wrapper {
+                width: 100%;
+                min-height: 180px;
+                border-radius: 12px 12px 0 0;
+            }
+
+            .view-list .book-info {
+                width: 100%;
+                padding: 16px;
+            }
+
+            .view-list .book-detail-rows {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
 
         /* --- DATATABLES & HIDDEN --- */
@@ -679,7 +1012,7 @@
         .footer-kampus-premium {
             background-color: #0f172a;
             color: #cbd5e1 !important;
-            font-size: 0.9rem;
+            font-size: 16px;
             margin-top: auto;
         }
 
@@ -687,7 +1020,28 @@
             font-weight: 700;
             color: #ffffff !important;
             margin-bottom: 20px;
-            font-size: 1.15rem;
+            font-size: 20px !important;
+        }
+
+        /* Prevent footer fonts from shrinking due to global html font-size */
+        .footer-kampus-premium *[style*="font-size: 0.95rem"],
+        .footer-kampus-premium *[style*="font-size:0.95rem"] {
+            font-size: 16px !important;
+        }
+
+        .footer-kampus-premium *[style*="font-size: 0.85rem"],
+        .footer-kampus-premium *[style*="font-size:0.85rem"] {
+            font-size: 15px !important;
+        }
+
+        .footer-kampus-premium *[style*="font-size: 0.8rem"],
+        .footer-kampus-premium *[style*="font-size:0.8rem"] {
+            font-size: 14px !important;
+        }
+
+        .footer-kampus-premium *[style*="font-size: 0.7rem"],
+        .footer-kampus-premium *[style*="font-size:0.7rem"] {
+            font-size: 12px !important;
         }
 
         .footer-kampus-premium p,
@@ -700,6 +1054,79 @@
             border-radius: 20px;
             border: none;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+        }
+
+        #detailBukuModal #md-judul {
+            font-size: 1.1rem !important;
+            font-weight: 700 !important;
+            line-height: 1.4;
+        }
+
+        #detailBukuModal .modal-body,
+        #detailBukuModal .modal-body p,
+        #detailBukuModal .modal-body td,
+        #detailBukuModal .modal-body span,
+        #detailBukuModal .modal-body h6 {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif !important;
+            font-size: 0.85rem;
+        }
+
+        /* Modal detail info rows */
+        .modal-info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .modal-info-row:last-child {
+            border-bottom: none;
+        }
+
+        .modal-info-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 0.75rem;
+        }
+
+        .modal-info-label {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+
+        .modal-info-value {
+            font-size: 0.88rem;
+            color: #1e293b;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .modal-stok-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #dcfce7;
+            color: #16a34a;
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .modal-stok-badge.not-available {
+            background: #fee2e2;
+            color: #dc2626;
         }
 
         .detail-cover-box {
@@ -715,28 +1142,61 @@
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
 
+        /* --- SEARCH SECTION --- */
+        .search-section-floating {
+            position: relative;
+            z-index: 20;
+            margin-top: -140px;
+            margin-bottom: 30px;
+        }
+
         /* --- STATS SECTION --- */
         .stats-section {
             position: relative;
             z-index: 10;
-            margin-top: -120px;
+            margin-top: 0;
             margin-bottom: 30px;
         }
 
         /* --- RESPONSIVE --- */
+        @media (max-width: 1200px) {
+            .book-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
         @media (max-width: 991px) {
             .hamburger-btn {
                 display: flex;
+            }
+
+            .book-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
             }
         }
 
         @media (max-width: 768px) {
 
-            /* Di mobile: stats muncul normal di bawah hero, tanpa floating */
+            /* --- UI/UX Improvement: Stats Stacked Rapat --- */
             .stats-section {
                 margin-top: 0;
-                padding: 0 12px;
-                margin-bottom: 20px;
+                padding: 0;
+                margin-bottom: 16px;
+            }
+
+            .stats-section .row {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0;
+                gap: 12px;
+            }
+
+            .stats-section .col-12 {
+                flex: 0 0 100%;
+                max-width: 100%;
+                padding: 0;
             }
 
             .hero-wrapper-premium {
@@ -744,17 +1204,92 @@
             }
 
             .hero-body-content {
-                padding-bottom: 40px;
+                padding-bottom: 30px;
+            }
+
+            /* --- UI/UX Improvement: Sticky & Clean Search Bar --- */
+            .search-section-floating {
+                position: sticky;
+                top: 73px;
+                /* Stick below the fixed navbar */
+                z-index: 100;
+                margin-top: -40px;
+                padding: 12px 10px;
+                background: rgba(248, 250, 252, 0.95);
+                backdrop-filter: blur(8px);
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            }
+
+            .search-section-floating .container::before,
+            .search-section-floating .row::before {
+                display: none;
+                /* Sembunyikan judul besar di mobile agar lebih efisien */
             }
 
             .search-container-premium {
                 padding: 8px 16px;
-                margin: 0 10px;
+                margin: 0;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
             }
 
-            .book-grid {
-                grid-template-columns: repeat(1, 1fr);
+            /* --- UI/UX Improvement: Layout Switcher Full Width --- */
+            .container.my-4>.d-flex.mb-4 {
+                justify-content: center !important;
+                margin-bottom: 16px !important;
             }
+
+            .layout-switcher {
+                width: 100%;
+                display: flex;
+            }
+
+            .layout-switcher .btn {
+                flex: 1;
+                /* Stretch buttons equally */
+                font-size: 0.85rem;
+                padding: 8px;
+            }
+
+            /* Mode Card Mobile: 1 kolom penuh */
+            .book-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding: 0;
+            }
+
+            /* Maksimalkan lebar container di mobile */
+            .container.my-4 {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+
+            .book-card {
+                border-radius: 14px;
+            }
+
+            .book-cover-wrapper {
+                min-height: 180px;
+                padding: 16px 18px;
+                border-radius: 14px 14px 0 0;
+            }
+
+            .cover-title {
+                font-size: 1.1rem;
+            }
+
+            .book-info {
+                padding: 14px 16px 16px;
+            }
+
+            .book-title {
+                font-size: 1rem;
+            }
+
+            .detail-label {
+                min-width: 58px;
+            }
+
 
             /* ==============================
                LIST VIEW MOBILE: horizontal
@@ -766,12 +1301,15 @@
             }
 
             .view-list .book-cover-wrapper {
-                width: 90px !important;
-                min-width: 90px;
-                height: auto !important;
-                min-height: 120px;
-                border-radius: 12px 0 0 12px !important;
+                width: 120px !important;
+                min-width: 120px;
+                min-height: 140px;
+                border-radius: 14px 0 0 14px !important;
                 flex-shrink: 0;
+            }
+
+            .view-list .cover-footer-row {
+                display: none;
             }
 
             .view-list .book-info {
@@ -780,34 +1318,96 @@
 
             .view-list .book-title {
                 font-size: 0.9rem;
-                margin: 2px 0 8px 0;
+                margin-bottom: 8px;
                 -webkit-line-clamp: 2;
             }
 
-            .view-list .book-category-tag {
-                font-size: 0.6rem;
-                padding: 2px 8px;
+            .view-list .book-detail-rows {
+                margin-bottom: 10px;
             }
 
-            .view-list .donor-name-badge {
-                font-size: 0.78rem;
-            }
-
-            .view-list .location-badge {
-                font-size: 0.7rem;
-                padding: 4px 8px;
-            }
-
-            .view-list .book-metadata-footer::before {
-                font-size: 0.55rem;
+            .view-list .book-detail-row {
+                font-size: 0.75rem;
             }
         }
 
         /* Layar sangat kecil (HP lama) */
         @media (max-width: 480px) {
+            .container.my-4 {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .book-cover-wrapper {
+                min-height: 160px;
+                padding: 14px 16px;
+            }
+
+            .cover-kategori-badge {
+                font-size: 0.62rem;
+                padding: 4px 10px;
+            }
+
+            .cover-copy-btn {
+                width: 28px;
+                height: 28px;
+                font-size: 0.75rem;
+            }
+
+            .cover-author {
+                font-size: 0.62rem;
+            }
+
+            .cover-title {
+                font-size: 1rem;
+            }
+
+            .cover-inisial-badge {
+                width: 30px;
+                height: 30px;
+                font-size: 0.65rem;
+            }
+
+            .book-info {
+                padding: 12px 14px 14px;
+            }
+
+            .book-kategori-pill {
+                font-size: 0.6rem;
+                padding: 3px 10px;
+            }
+
+            .book-count {
+                font-size: 0.7rem;
+            }
+
+            .book-title {
+                font-size: 0.92rem;
+                margin-bottom: 10px;
+            }
+
+            .detail-label {
+                font-size: 0.72rem;
+                min-width: 52px;
+            }
+
+            .detail-value {
+                font-size: 0.76rem;
+            }
+
+            .donatur-avatar {
+                width: 28px;
+                height: 28px;
+                font-size: 0.72rem;
+            }
+
+            .donatur-name {
+                font-size: 0.8rem;
+            }
+
             .view-list .book-cover-wrapper {
-                width: 75px !important;
-                min-width: 75px;
+                width: 100px !important;
+                min-width: 100px;
             }
         }
     </style>
@@ -831,7 +1431,6 @@
                     <img src="/asset/logo.png" alt="Logo ST Bhinneka" height="42" style="object-fit: contain;">
                     <div>
                         <div class="judul-sistem">Donatur Buku Perpustakaan ST Bhinneka</div>
-                        <div class="sub-judul-sistem">Sistem Informasi Data Donatur Buku</div>
                     </div>
                 </div>
 
@@ -867,20 +1466,32 @@
                 <img src="/asset/logo.png" alt="Logo Besar" height="70" class="mb-3"
                     style="filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5));">
 
-                <p class="mb-2 fw-bold" style="color: #60a5fa; letter-spacing: 2px; font-size: 0.85rem;">SISTEM
-                    PENCARIAN DATA DONATUR BUKU</p>
+                <p class="mb-2 fw-bold" style="color: #60a5fa; letter-spacing: 2px; font-size: 0.85rem;">UNIVERSITAS
+                    SATYA TERRA BHINNEKA</p>
 
-                <p
-                    style="font-size: 0.9rem; color: #94a3b8; letter-spacing: 1.5px; font-weight: 600; text-transform: uppercase; margin-bottom: 14px;">
-                    ✦ &nbsp; Tentang Program &nbsp; ✦
-                </p>
-                <p
-                    style="font-size: 0.95rem; color: #e2e8f0; line-height: 1.9; max-width: 620px; margin: 0 auto; text-align: justify; text-align-last: center; padding: 0 12px;">
-                    Program donasi buku ini dirancang untuk menghimpun kontribusi literasi dari segenap civitas
-                    akademika dan masyarakat luas. Di sini, Anda dapat memantau secara terbuka data donatur, daftar
-                    judul buku yang disumbangkan, serta posisi rak penempatannya di perpustakaan Universitas Satya Terra
-                    Bhinneka.
-                </p>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SEARCH SECTION -->
+    <div class="search-section-floating">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <!-- <p class="text-center text-muted small mb-2" id="totalBuku" style="font-weight: 500;">Menghitung
+                        total koleksi buku...</p> -->
+
+                    <div class="search-wrapper search-container-premium d-flex align-items-center px-4 py-2">
+                        <input type="text" id="pencarianGramedia" class="form-control search-input-premium w-100"
+                            placeholder="Ketik nama donatur atau judul buku ...">
+
+                        <button type="button" id="btnClearSearch" class="btn-clear-search me-2"
+                            title="Bersihkan Pencarian"
+                            style="position:static; transform:none; display:none;">&times;</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -916,35 +1527,7 @@
                             style="font-size:0.65rem; letter-spacing:0.5px;">Kategori Buku</p>
                     </div>
                 </div>
-                <div class="col-12 col-md-3">
-                    <div class="card border-0 shadow-sm rounded-4 h-100 py-3 text-center"
-                        style="background: rgba(255,255,255,0.95); backdrop-filter: blur(10px);">
-                        <div class="mb-2"><i class="fas fa-building text-success fs-4"></i></div>
-                        <h5 class="fw-bolder text-dark mb-0 mt-1">Perpustakaan Satya Terra Bhinneka</h5>
-                        <p class="text-muted small text-uppercase fw-bold mb-0 mt-1"
-                            style="font-size:0.65rem; letter-spacing:0.5px;">Lantai 2 Gedung Terra</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="search-section-floating">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-7">
-                    <!-- <p class="text-center text-muted small mb-2" id="totalBuku" style="font-weight: 500;">Menghitung
-                        total koleksi buku...</p> -->
-
-                    <div class="search-wrapper search-container-premium d-flex align-items-center px-4 py-2">
-                        <input type="text" id="pencarianGramedia" class="form-control search-input-premium w-100"
-                            placeholder="Ketik nama donatur atau judul buku ...">
-
-                        <button type="button" id="btnClearSearch" class="btn-clear-search me-2"
-                            title="Bersihkan Pencarian"
-                            style="position:static; transform:none; display:none;">&times;</button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -1063,7 +1646,7 @@
                         </div>
                     </div>
                     <p class="small text-deskripsi-footer" style="color: #cbd5e1 !important; line-height: 1.6;">
-                        Sistem Informasi data donatur buku online Perpustakaan Universitas Satya Terra Bhinneka.
+                        Donatur Buku Perpustakaan Universitas Satya Terra Bhinneka.
                     </p>
                 </div>
 
@@ -1164,60 +1747,101 @@
     <div class="modal fade" id="detailBukuModal" tabindex="-1" aria-labelledby="detailBukuModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content border-0" style="border-radius: 16px; overflow: hidden; background: #ffffff;">
-                <div class="modal-header border-0 pt-4 px-4">
-                    <span class="badge bg-success text-white px-3 py-2" style="font-size: 0.8rem;"><i
-                            class="fas fa-book-reader"></i> Buku Donasi</span>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body px-4 pb-5">
-                    <div class="row">
-                        <div class="col-md-4 text-center mb-4 mb-md-0">
-                            <div class="detail-cover-box p-3"
-                                style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px;">
-                                <img id="md-cover" src="" alt="Cover Buku" class="img-fluid rounded shadow-sm"
-                                    style="max-height: 260px; object-fit: contain;">
-                            </div>
+            <div class="modal-content border-0"
+                style="border-radius: 20px; overflow: hidden; background: #ffffff; box-shadow: 0 20px 40px rgba(0,0,0,0.15);">
+                <!-- Header / Close Btn (Floating) -->
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    style="position: absolute; top: 16px; right: 20px; z-index: 10; background-color: rgba(255,255,255,0.8); border-radius: 50%; padding: 10px;"></button>
+
+                <div class="modal-body p-0">
+                    <div class="row g-0">
+                        <!-- Kolom Kiri: Cover Premium (Sama seperti card) -->
+                        <div class="col-md-5 position-relative d-flex flex-column justify-content-center align-items-center p-4"
+                            id="md-gradient-bg"
+                            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 350px;">
+
+                            <span class="badge"
+                                style="position: absolute; top: 20px; left: 20px; background: rgba(255,255,255,0.25); backdrop-filter: blur(4px); color: #fff; font-size: 0.75rem; letter-spacing: 0.5px; padding: 6px 14px; border-radius: 50px; text-transform: uppercase;"
+                                id="md-kategori-top">Umum</span>
+
+                            <img id="md-cover" src="" alt="Cover Buku" class="img-fluid rounded"
+                                style="max-height: 260px; object-fit: contain; filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)); transition: transform 0.3s; z-index: 2;">
+
                         </div>
 
-                        <div class="col-md-8">
-                            <h3 id="md-judul" class="fw-bold text-dark mb-1">Judul Buku</h3>
-                            <p class="text-primary mb-3">— <span id="md-pengarang">Nama Pengarang</span></p>
+                        <!-- Kolom Kanan: Detail -->
+                        <div class="col-md-7 d-flex flex-column p-4 p-md-5">
+                            <div class="mb-auto">
+                                <h2 id="md-judul" class="fw-bolder mb-2"
+                                    style="color: #1e293b; line-height: 1.3; font-size: 1.5rem;">Judul Buku</h2>
+                                <p class="mb-4"
+                                    style="color: #64748b; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;">
+                                    <span
+                                        style="display: inline-flex; width: 28px; height: 28px; background: #f1f5f9; color: #475569; border-radius: 8px; align-items: center; justify-content: center; font-size: 0.8rem;"><i
+                                            class="fas fa-pen-nib"></i></span>
+                                    <span id="md-pengarang">Nama Pengarang</span>
+                                </p>
 
-                            <div class="mb-4">
-                                <h6 class="fw-bold text-secondary text-uppercase small mb-1"
-                                    style="letter-spacing: 0.5px;">Deskripsi</h6>
-                                <p class="text-muted small italic" id="md-deskripsi">Tidak Tersedia Deskripsi</p>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-6">
+                                        <div class="p-3 h-100"
+                                            style="background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9;">
+                                            <div
+                                                style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                                                Penerbit</div>
+                                            <div id="md-penerbit"
+                                                style="font-size: 0.85rem; color: #334155; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                                -</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="p-3 h-100"
+                                            style="background: #f8fafc; border-radius: 12px; border: 1px solid #f1f5f9;">
+                                            <div
+                                                style="font-size: 0.7rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">
+                                                Lokasi Rak</div>
+                                            <div
+                                                style="font-size: 0.85rem; color: #334155; font-weight: 600; display: flex; align-items: center; gap: 6px;">
+                                                <i class="fas fa-bookmark" style="color: #0ea5e9;"></i> <span
+                                                    id="md-rak">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="p-3 d-flex justify-content-between align-items-center"
+                                            style="background: #f0fdf4; border-radius: 12px; border: 1px solid #dcfce7;"
+                                            id="md-stok-container">
+                                            <div
+                                                style="font-size: 0.7rem; color: #166534; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                                                Ketersediaan</div>
+                                            <div id="md-stok-badge"
+                                                style="font-size: 0.85rem; color: #15803d; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+                                                <i class="fas fa-check-circle"></i> <span id="md-stok">5 Salinan</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="mb-4">
-                                <h6 class="fw-bold text-secondary text-uppercase small mb-1"
-                                    style="letter-spacing: 0.5px;">Ketersediaan</h6>
-                                <p class="text-dark fw-semibold" id="md-stok">Tidak ada salinan data</p>
+                            <!-- Bagian Bawah Kanan: Pendonasi -->
+                            <div class="mt-4 pt-4 border-top" style="border-color: #f1f5f9 !important;">
+                                <div
+                                    style="font-size: 0.7rem; color: #94a3b8; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;">
+                                    Di-donasikan Oleh:</div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div id="md-donatur-avatar"
+                                        style="width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); display: flex; justify-content: center; align-items: center; color: white; font-weight: 700; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                                        A</div>
+                                    <div>
+                                        <div id="md-donatur"
+                                            style="font-size: 1.05rem; font-weight: 700; color: #1e293b;">Nama Donatur
+                                        </div>
+                                        <div style="font-size: 0.75rem; color: #64748b; font-weight: 500;">Pahlawan
+                                            Literasi Kampus</div>
+                                    </div>
+                                </div>
                             </div>
 
-                            <h6 class="fw-bold text-dark mb-2">Informasi Detail</h6>
-                            <table class="table table-sm table-borderless text-dark small detail-table">
-                                <tbody>
-                                    <tr>
-                                        <td width="30%" class="text-muted">Kategori / Subjek</td>
-                                        <td>: <span id="md-kategori">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Rak</td>
-                                        <td>: <span id="md-rak">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Penerbit</td>
-                                        <td>: <span id="md-penerbit">-</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-muted">Donatur</td>
-                                        <td>: <span id="md-donatur" class="badge bg-light text-primary border">-</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -1232,7 +1856,7 @@
         let dataBukuGlobal = [];
         let dataBukuAktif = [];     // Menyimpan data hasil filter pencarian yang aktif
         let currentPage = 1;        // Halaman aktif saat ini
-        const booksPerPage = 5;     // Batas maksimal 5 buku per baris/halaman
+        const booksPerPage = 20;     // Batas maksimal 20 buku per halaman (5 baris x 4 kolom)
 
         // 1. LOGIKA SCROLL NAVBAR (Diletakkan di luar ready agar responsif)
         $(window).on('scroll', function () {
@@ -1285,29 +1909,46 @@
                 // Mencari index asli di array global untuk modal detail
                 const indexAsli = dataBukuGlobal.findIndex(b => b.judul === buku.judul && b.nama_donatur === buku.nama_donatur);
 
-                let bgColor = '#ffffff';
                 let inisial = buku.judul ? buku.judul.substring(0, 2).toUpperCase() : 'BK';
                 let gambarDummy = `/asset/buku-${(indexAsli % 8) + 1}.jpg`;
+                let kategori = buku.kategori || 'Umum';
+                let pengarang = buku.pengarang || 'Anonim';
+                let penerbit = buku.penerbit || '-';
+                let jumlahBuku = buku.jumlah_buku || 0;
+                let rak = buku.rak || '-';
+                let donatur = buku.nama_donatur || '-';
+                let donaturInisial = donatur.charAt(0).toUpperCase();
 
                 cardsHtml += `
                     <div class="book-card card-item" id="card-${indexAsli}" data-index="${indexAsli}">
-                        <div class="book-cover-wrapper" style="background-color: ${bgColor}">
-                            <img src="${gambarDummy}" 
-                                 class="book-cover-img" 
-                                 alt="${buku.judul}"
-                                 onerror="this.style.display='none'; $(this).next().show();">
-                            <div class="cover-inisial" style="display:none;">${inisial}</div>
+                        <div class="book-cover-wrapper" style="background-image: url('${gambarDummy}'); background-size: contain; background-repeat: no-repeat; background-position: center; min-height: 220px; border-radius: 18px 18px 0 0;">
                         </div>
                         <div class="book-info">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span class="book-category-tag">${buku.kategori || 'Umum'}</span>
-                                <span class="text-muted small" style="font-size: 0.75rem;">Ketersediaan: ${buku.jumlah_buku}</span>
+                            <div class="book-info-header">
+                                <span class="book-kategori-pill">${kategori}</span>
+                                <span class="book-count"><i class="far fa-copy"></i> ${jumlahBuku} Buku</span>
                             </div>
                             <div class="book-title" title="${buku.judul}">${buku.judul}</div>
-                            
-                            <div class="book-metadata-footer">
-                                <div class="donor-name-badge"><strong>Donatur:</strong> ${buku.nama_donatur}</div>
-                                <div class="location-badge"><i class="fas fa-bookmark"></i>${buku.rak}</div>
+                            <div class="book-detail-rows">
+                                <div class="book-detail-row">
+                                    <span class="detail-label">Penulis</span>
+                                    <span class="detail-value">${pengarang}</span>
+                                </div>
+                                <div class="book-detail-row">
+                                    <span class="detail-label">Penerbit</span>
+                                    <span class="detail-value">${penerbit}</span>
+                                </div>
+                                <div class="book-detail-row">
+                                    <span class="detail-label">Rak</span>
+                                    <span class="detail-value"><span class="rak-badge">${rak}</span></span>
+                                </div>
+                            </div>
+                            <div class="book-donatur-section">
+                                <div class="donatur-label">PENDONASI :</div>
+                                <div class="donatur-info">
+                                    <span class="donatur-avatar">${donaturInisial}</span>
+                                    <span class="donatur-name">${donatur}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1390,14 +2031,51 @@
 
                 if (!bukuPilihan) return;
 
+                // Sync modal gradient color with the clicked card's color variant (8 vars)
+                const gradientIndex = $(this).index() % 8;
+                const gradients = [
+                    'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    'linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%)',
+                    'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)',
+                    'linear-gradient(135deg, #f7971e 0%, #ffd200 100%)',
+                    'linear-gradient(135deg, #ee0979 0%, #ff6a00 100%)',
+                    'linear-gradient(135deg, #00c6ff 0%, #0072ff 100%)',
+                    'linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%)',
+                    'linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%)'
+                ];
+                const chosenGradient = gradients[gradientIndex];
+
+                $('#md-gradient-bg').css('background', chosenGradient);
+                $('#md-donatur-avatar').css('background', chosenGradient);
+                $('#md-donatur-avatar').text(bukuPilihan.nama_donatur ? bukuPilihan.nama_donatur.charAt(0).toUpperCase() : '?');
+
                 $('#md-cover').attr('src', `/asset/buku-${(idx % 8) + 1}.jpg`);
                 $('#md-judul').text(bukuPilihan.judul);
                 $('#md-pengarang').text(bukuPilihan.pengarang || 'Anonim');
-                $('#md-stok').text(bukuPilihan.jumlah_buku > 0 ? `Tersedia ${bukuPilihan.jumlah_buku} Salinan` : 'Tidak ada salinan data');
-                $('#md-kategori').text(bukuPilihan.kategori || 'Umum');
-                $('#md-rak').text(`Rak ${bukuPilihan.rak}`);
+                $('#md-kategori-top').text(bukuPilihan.kategori || 'Umum');
+
                 $('#md-penerbit').text(bukuPilihan.penerbit || 'Tidak Diketahui');
-                $('#md-donatur').text(bukuPilihan.nama_donatur);
+                $('#md-rak').text(bukuPilihan.rak || '-');
+                $('#md-donatur').text(bukuPilihan.nama_donatur || '-');
+
+                // Ketersediaan badge dengan warna sesuai stok
+                const jumlah = parseInt(bukuPilihan.jumlah_buku) || 0;
+                const stokBadge = $('#md-stok-badge');
+                const stokContainer = $('#md-stok-container');
+
+                if (jumlah > 0) {
+                    $('#md-stok').text(`${jumlah} Salinan`);
+                    stokContainer.css({ 'background': '#f0fdf4', 'border-color': '#dcfce7' });
+                    stokContainer.find('div:first').css('color', '#166534');
+                    stokBadge.css('color', '#15803d');
+                    stokBadge.find('i').attr('class', 'fas fa-check-circle');
+                } else {
+                    $('#md-stok').text('Kosong');
+                    stokContainer.css({ 'background': '#fef2f2', 'border-color': '#fee2e2' });
+                    stokContainer.find('div:first').css('color', '#991b1b');
+                    stokBadge.css('color', '#b91c1c');
+                    stokBadge.find('i').attr('class', 'fas fa-times-circle');
+                }
 
                 $('#detailBukuModal').modal('show');
             });
