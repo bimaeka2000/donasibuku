@@ -1921,7 +1921,7 @@
 
                 cardsHtml += `
                     <div class="book-card card-item" id="card-${indexAsli}" data-index="${indexAsli}">
-                        <div class="book-cover-wrapper" style="background-image: url('${gambarDummy}'); background-size: contain; background-repeat: no-repeat; background-position: center; min-height: 220px; border-radius: 18px 18px 0 0;">
+                        <div class="book-cover-wrapper">
                         </div>
                         <div class="book-info">
                             <div class="book-info-header">
@@ -1978,11 +1978,47 @@
                 </li>
             `;
 
-            // Nomor Angka Halaman
-            for (let i = 1; i <= totalPages; i++) {
+            // Nomor Angka Halaman (Dibatasi agar tidak terlalu panjang)
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+
+            // Tampilkan halaman pertama dan titik-titik jika perlu
+            if (startPage > 1) {
+                paginationHtml += `
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" onclick="pindahHalaman(1)">1</a>
+                    </li>
+                `;
+                if (startPage > 2) {
+                    paginationHtml += `
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    `;
+                }
+            }
+
+            // Loop untuk halaman yang aktif di tengah
+            for (let i = startPage; i <= endPage; i++) {
                 paginationHtml += `
                     <li class="page-item ${currentPage === i ? 'active' : ''}">
                         <a class="page-link" href="javascript:void(0)" onclick="pindahHalaman(${i})">${i}</a>
+                    </li>
+                `;
+            }
+
+            // Tampilkan titik-titik dan halaman terakhir jika perlu
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    paginationHtml += `
+                        <li class="page-item disabled">
+                            <span class="page-link">...</span>
+                        </li>
+                    `;
+                }
+                paginationHtml += `
+                    <li class="page-item">
+                        <a class="page-link" href="javascript:void(0)" onclick="pindahHalaman(${totalPages})">${totalPages}</a>
                     </li>
                 `;
             }
@@ -2049,7 +2085,7 @@
                 $('#md-donatur-avatar').css('background', chosenGradient);
                 $('#md-donatur-avatar').text(bukuPilihan.nama_donatur ? bukuPilihan.nama_donatur.charAt(0).toUpperCase() : '?');
 
-                $('#md-cover').attr('src', `/asset/buku-${(idx % 8) + 1}.jpg`);
+                // $('#md-cover').attr('src', `/asset/buku-${(idx % 8) + 1}.jpg`);
                 $('#md-judul').text(bukuPilihan.judul);
                 $('#md-pengarang').text(bukuPilihan.pengarang || 'Anonim');
                 $('#md-kategori-top').text(bukuPilihan.kategori || 'Umum');

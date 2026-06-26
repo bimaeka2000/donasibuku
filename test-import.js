@@ -5,7 +5,7 @@ const path = require('path');
 const excelPath = path.join(__dirname, 'buku_test.xlsx');
 const jsonDbPath = path.join(__dirname, 'database.json');
 
-console.log('🔄 Memulai proses import data baru...');
+console.log('🔄 Memulai proses import data  baru...');
 
 try {
     const workbook = xlsx.readFile(excelPath);

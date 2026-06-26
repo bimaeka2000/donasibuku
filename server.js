@@ -50,55 +50,72 @@ app.post('/api/import', upload.single('fileBuku'), (req, res) => {
             dataLama = JSON.parse(fs.readFileSync(jsonDbPath, 'utf-8'));
         }
 
-        // Buat 'Set' atau peta data unik dari data lama untuk pengecekan super cepat (I/O Efisien)
-        // Kita gabungkan judul dan donatur sebagai key unik (huruf kecil semua agar akurat)
-        const trackerDataLama = new Set(
-            dataLama.map(buku => `${buku.judul.toLowerCase().trim()}_${buku.nama_donatur.toLowerCase().trim()}`)
-        );
+        // Fungsi untuk format Title Case (seperti Aa)
+        const formatTitleCase = (str) => {
+            if (!str) return '-';
+            return str.toString().trim().toLowerCase().split(/\s+/).map(word => {
+                if (word.length === 0) return '';
+                return word.charAt(0).toUpperCase() + word.slice(1);
+            }).join(' ');
+        };
 
-        let jumlahBukuBaru = 0;
-        let jumlahBukuDiduplikat = 0;
-        const dataBaruBersih = [];
-
-        dataBukuRaw.forEach((buku, index) => {
-            const judul = (buku.judul || buku.Judul || '-').trim();
-            const donatur = (buku.nama_donatur || buku.Nama_Donatur || 'Hamba Allah').trim();
-
-            // Kunci unik untuk baris dari excel saat ini
-            const kunciUnik = `${judul.toLowerCase()}_${donatur.toLowerCase()}`;
-
-            // JIKA SUDAH ADA DI DATABASE, MAKA DILEWATI (SKIP)
-            if (trackerDataLama.has(kunciUnik)) {
-                jumlahBukuDiduplikat++;
-                return; // Skip ke baris excel berikutnya
-            }
-
-            // JIKA BELUM ADA, MASUKKAN SEBAGAI DATA BARU
-            dataBaruBersih.push({
-                id: `BK-${Date.now()}-${index}-${Math.floor(Math.random() * 1000)}`,
-                judul: judul,
-                kategori: buku.kategori || buku.Kategori || 'Umum',
-                nama_donatur: donatur,
-                jumlah_buku: parseInt(buku.jumlah_buku || buku.Jumlah_Buku || 1),
-                rak: buku.rak || buku.Rak || '-',
-                pengarang: buku.pengarang || buku.Pengarang || '-',
-                penerbit: buku.penerbit || buku.Penerbit || '-'
-            });
-
-            // Masukkan juga ke tracker agar jika di dalam SATU FILE EXCEL YANG SAMA ada baris ganda, tidak ikut lolos
-            trackerDataLama.add(kunciUnik);
-            jumlahBukuBaru++;
+        // Gunakan Map untuk mengelompokkan data HANYA berdasarkan judul
+        const mapDataBuku = new Map();
+        
+        // Masukkan data lama ke dalam Map
+        dataLama.forEach(buku => {
+            // Kita juga format judul lama agar seragam
+            buku.judul = formatTitleCase(buku.judul);
+            const kunciUnik = buku.judul.toLowerCase();
+            mapDataBuku.set(kunciUnik, buku);
         });
 
-        // Gabungkan data lama dengan data baru yang lolos seleksi anti-duplikat
-        const totalDataAkhir = [...dataLama, ...dataBaruBersih];
+        let jumlahBukuBaru = 0;
+        let jumlahBukuDiupdate = 0;
+
+        dataBukuRaw.forEach((buku, index) => {
+            const judulRaw = (buku.judul || buku.Judul || '-');
+            const judul = formatTitleCase(judulRaw);
+            
+            const donaturRaw = (buku.nama_donatur || buku.Nama_Donatur || 'Hamba Allah');
+            const donatur = formatTitleCase(donaturRaw);
+            
+            const jumlahBukuImport = parseInt(buku.jumlah_buku || buku.Jumlah_Buku || 1);
+
+            // Kunci unik hanya dari judul excel saat ini
+            const kunciUnik = judul.toLowerCase();
+
+            // JIKA SUDAH ADA DI DATABASE ATAU FILE EXCEL, TAMBAHKAN JUMLAHNYA
+            if (mapDataBuku.has(kunciUnik)) {
+                const bukuAda = mapDataBuku.get(kunciUnik);
+                bukuAda.jumlah_buku = parseInt(bukuAda.jumlah_buku || 0) + jumlahBukuImport;
+                jumlahBukuDiupdate++;
+            } else {
+                // JIKA BELUM ADA, MASUKKAN SEBAGAI DATA BARU
+                const bukuBaru = {
+                    id: `BK-${Date.now()}-${index}-${Math.floor(Math.random() * 1000)}`,
+                    judul: judul,
+                    kategori: formatTitleCase(buku.kategori || buku.Kategori || 'Umum'),
+                    nama_donatur: donatur,
+                    jumlah_buku: jumlahBukuImport,
+                    rak: (buku.rak || buku.Rak || '-').toString().trim(),
+                    pengarang: formatTitleCase(buku.pengarang || buku.Pengarang || '-'),
+                    penerbit: formatTitleCase(buku.penerbit || buku.Penerbit || '-')
+                };
+                mapDataBuku.set(kunciUnik, bukuBaru);
+                jumlahBukuBaru++;
+            }
+        });
+
+        // Ambil semua data dari Map
+        const totalDataAkhir = Array.from(mapDataBuku.values());
 
         // Simpan ke database JSON
         fs.writeFileSync(jsonDbPath, JSON.stringify(totalDataAkhir, null, 2), 'utf-8');
         fs.unlinkSync(req.file.path); // Hapus file temporary di folder uploads
 
         res.json({
-            message: `Proses Selesai! Berhasil menambah ${jumlahBukuBaru} buku baru. (Menolak ${jumlahBukuDiduplikat} data duplikat)`,
+            message: `Proses Selesai! Berhasil menambah ${jumlahBukuBaru} buku baru dan memperbarui jumlah ${jumlahBukuDiupdate} buku.`,
             total_koleksi: totalDataAkhir.length
         });
 
